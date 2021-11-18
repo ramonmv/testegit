@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html xmlns:cc="http://creativecommons.org/ns#">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# medium-com: http://ogp.me/ns/fb/medium-com#">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Build a Simple Todo App with Vue.js and Vuex 2.0 – paadams – Medium</title>
+    <link rel="canonical" href="https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514">
+    <meta name="title" content="Build a Simple Todo App with Vue.js and Vuex 2.0 – paadams – Medium">
+    <meta name="referrer" content="unsafe-url">
+    <meta name="description" content="This tutorial will cover some of the basics of building an app using the latest versions of Vue.js and Vuex. Vue 2.0 is in the RC phase of its development at the time of this writing. A number of…">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:title" content="Build a Simple Todo App with Vue.js and Vuex 2.0 – paadams – Medium">
+    <meta property="og:url" content="https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514">
+    <meta property="fb:app_id" content="542599432471018">
+    <meta property="og:description" content="An introduction to building apps with Vue.js and Vuex 2.0">
+    <meta name="twitter:description" content="An introduction to building apps with Vue.js and Vuex 2.0">
+    <link rel="publisher" href="https://plus.google.com/103654360130207659246">
+    <link rel="author" href="https://medium.com/@paadams">
+    <meta property="author" content="paadams">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta property="article:publisher" content="https://www.facebook.com/medium">
+    <meta property="article:author" content="https://medium.com/@paadams">
+    <meta name="robots" content="index, follow">
+    <meta property="article:published_time" content="2016-08-18T01:30:57.684Z">
+    <meta name="twitter:site" content="@Medium">
+    <meta property="og:site_name" content="Medium">
+    <meta name="twitter:label1" value="Reading time">
+    <meta name="twitter:data1" value="8 min read">
+    <meta name="twitter:app:name:iphone" content="Medium">
+    <meta name="twitter:app:id:iphone" content="828256236">
+    <meta name="twitter:app:url:iphone" content="medium://p/1778ae175514">
+    <meta property="al:ios:app_name" content="Medium">
+    <meta property="al:ios:app_store_id" content="828256236">
+    <meta property="al:android:package" content="com.medium.reader">
+    <meta property="al:android:app_name" content="Medium">
+    <meta property="al:ios:url" content="medium://p/1778ae175514">
+    <meta property="al:android:url" content="medium://p/1778ae175514">
+    <meta property="al:web:url" content="https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514">
+    <link rel="search" type="application/opensearchdescription+xml" title="Medium" href="/osd.xml" />
+    <link rel="alternate" href="android-app://com.medium.reader/https/medium.com/p/1778ae175514" />
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"NewsArticle","image":{"@type":"ImageObject","width":1920,"height":534,"url":"https://cdn-images-1.medium.com/max/1920/1*5ztbgEt4NqpVaxTc64C-XA.png"},"datePublished":"2016-08-18T01:30:57.684Z","dateModified":"2017-07-25T01:27:19.849Z","headline":"Build a Simple Todo App with Vue.js and Vuex 2.0","name":"Build a Simple Todo App with Vue.js and Vuex 2.0","keywords":["JavaScript","Vuejs","Vuex"],"author":{"@type":"Person","name":"paadams","url":"https://medium.com/@paadams"},"creator":["paadams"],"publisher":{"@type":"Organization","name":"Medium","url":"https://medium.com/","logo":{"@type":"ImageObject","width":215,"height":60,"url":"https://cdn-images-1.medium.com/max/215/1*5ztbgEt4NqpVaxTc64C-XA.png"}},"mainEntityOfPage":"https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514"}</script>
+    <link rel="stylesheet" type="text/css" href="https://cdn-static-1.medium.com/_/fp/css/fonts-base.by5Oi_VbnwEIvhnWIsuUjA.css" />
+    <link rel="stylesheet" href="https://cdn-static-1.medium.com/_/fp/css/main-base.4PUibT7ycl7i1RLePjunew.css">
+    <script>
+        if (window.top !== window.self) window.top.location = window.self.location.href;
+        var OB_startTime = new Date().getTime();
+        var OB_loadErrors = [];
+
+        function _onerror(e) {
+            OB_loadErrors.push(e)
+        };
+        if (document.addEventListener) document.addEventListener("error", _onerror, true);
+        else if (document.attachEvent) document.attachEvent("onerror", _onerror);
+
+        function _asyncScript(u) {
+            var d = document,
+                f = d.getElementsByTagName("script")[0],
+                s = d.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = u;
+            f.parentNode.insertBefore(s, f);
+        }
+
+        function _asyncStyles(u) {
+            var d = document,
+                f = d.getElementsByTagName("script")[0],
+                s = d.createElement("link");
+            s.rel = "stylesheet";
+            s.href = u;
+            f.parentNode.insertBefore(s, f);
+            return s
+        }(new Image()).src = "/_/stat?event=pixel.load&origin=" + encodeURIComponent(location.origin);
+    </script>
+    <script>
+        window.ga = window.ga || function() {
+            (ga.q = ga.q || []).push(arguments)
+        };
+        ga.l = +new Date;
+        ga("create", "UA-24232453-2", "auto", {
+            "allowLinker": true,
+            "legacyCookieDomain": window.location.hostname
+        });
+        ga("send", "pageview");
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    <!--[if lt IE 9]><script charset="UTF-8" src="https://cdn-static-1.medium.com/_/fp/js/shiv.RI2ePTZ5gFmMgLzG5bEVAA.js"></script><![endif]-->
+    <link rel="icon" href="https://cdn-static-1.medium.com/_/fp/icons/favicon-medium.TAS6uQ-Y7kcKgi0xjcYHXw.ico" class="js-favicon">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://cdn-images-1.medium.com/fit/c/152/152/1*W0nmth_X8nFKjn6BZ388UQ.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://cdn-images-1.medium.com/fit/c/120/120/1*W0nmth_X8nFKjn6BZ388UQ.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://cdn-images-1.medium.com/fit/c/76/76/1*W0nmth_X8nFKjn6BZ388UQ.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://cdn-images-1.medium.com/fit/c/60/60/1*W0nmth_X8nFKjn6BZ388UQ.png">
+    <link rel="mask-icon" href="https://cdn-static-1.medium.com/_/fp/icons/favicon.KjTfUJo7yJH_fCoUzzH3cg.svg" color="#171717">
+</head>
+
+<body itemscope class=" postShowScreen browser-chrome is-withMagicUnderlines is-noJs">
+    <script>
+        document.body.className = document.body.className.replace(/(^|\s)is-noJs(\s|$)/, "$1is-js$2")
+    </script>
+    <div class="site-main" id="container">
+        <div class="butterBar butterBar--error"></div>
+        <div class="surface">
+            <div id="prerendered" class="screenContent">
+                <canvas class="canvas-renderer"></canvas>
+                <div class="container u-maxWidth740 u-xs-margin0 notesPositionContainer js-notesPositionContainer"></div>
+                <div class="metabar u-clearfix js-metabar u-boxShadowBottomThinLighter u-fixed u-backgroundTransparentWhiteDarkest">
+                    <div class="metabar-inner u-marginAuto u-maxWidth1000 u-paddingLeft20 u-paddingRight20 js-metabarMiddle">
+                        <div class="metabar-block metabar-block--left u-floatLeft u-height65 u-xs-height56"><a href="https://medium.com/" data-log-event="home" class="siteNav-logo"><span class="svgIcon svgIcon--logoNew svgIcon--45px is-flushLeft"><svg class="svgIcon-use" width="45" height="45"  viewBox="-17 18 45 45" data-multipart="true"><path d="M11.525 28.078c-.472-.225-.858.002-.858.506v20.044l8.616 4.113c.948.46 1.717.14 1.717-.7v-19.3a.22.22 0 0 0-.124-.19l-9.35-4.46v-.01z"/><path d="M.333 43.696l9.83-15.247c.278-.43.89-.6 1.36-.38l9.364 4.47c.06.03.082.1.047.15L10.666 48.63.333 43.698v-.002z"/><path d="M-8.57 28.35c-.786-.375-1.053-.096-.592.62L.333 43.696l10.333 4.932L.356 32.635a.156.156 0 0 0-.06-.054l-8.866-4.23z"/><path d="M.333 52.033c0 .84-.643 1.22-1.43.844l-8.045-3.84c-.472-.224-.858-.82-.858-1.325V28.89c0-.672.515-.976 1.145-.675l9.133 4.36a.092.092 0 0 1 .055.084v19.37z"/></svg></span><span class="svgIcon svgIcon--logoWordmarkNew svgIcon--95x45px"><svg class="svgIcon-use" width="95" height="45"  viewBox="8 18 95 45"><path d="M38.926 37.656c-3.187 0-5.652 2.02-5.652 5.575 0 4.07 2.87 5.73 5.73 5.73 1.67 0 3.238-.43 4.58-1.38.13-.1.153-.17.08-.31l-.67-1.22c-.075-.14-.175-.14-.3-.07-1.244.7-2.262 1.02-3.478 1.02-1.472 0-3.21-.7-3.438-3.04 0-.02 0-.07.08-.07h8.072c.247 0 .227-.41.227-.78 0-3.92-2.46-5.43-5.197-5.43h-.034zm2.59 4.43h-5.578c-.1 0-.074-.098-.074-.12.25-1.434 1.37-2.383 3.014-2.383 1.64 0 2.713 1.117 2.713 2.43 0 .05-.02.07-.07.07v.01-.006zm-14.04-7.872l-4.41 8.1c-.028.05-.053.05-.078 0l-4.41-8.1a.376.376 0 0 0-.352-.195h-3.023c-.13 0-.203.07-.203.19V48.6c0 .123.076.196.202.196h2.116c.126 0 .203-.073.203-.196v-9.07c0-1.05-.02-2.025-.05-2.513 0-.05.08-.074.11 0 .25.634.66 1.44 1.06 2.17l3.66 6.588c.08.13.15.178.3.178h.89c.16 0 .23-.05.31-.168l3.66-6.58c.41-.73.81-1.532 1.06-2.164.03-.07.11-.05.11 0-.02.5-.05 1.47-.05 2.52v9.08c0 .13.08.2.21.2h2.11c.13 0 .21-.07.21-.19V34.22c0-.118-.07-.188-.19-.188h-3.05c-.19-.01-.29.063-.37.184zm68.022 5.29c-.697-1.29-2.04-1.846-3.686-1.846-1.494 0-2.862.508-3.932 1.53-.798-1.022-1.967-1.533-3.387-1.533-1.343 0-2.415.336-3.436 1.067l-1.717-.86c-.307-.148-.504 0-.504.267v10.45c0 .11.07.18.197.18h2.085c.12 0 .198-.08.198-.2v-6.72c0-.64.05-.92.365-1.27.55-.59 1.38-.9 2.22-.9 1.4 0 2.26.78 2.26 2.21v6.67c0 .12.07.2.2.2h2.09c.12 0 .2-.08.2-.2v-6.72c0-.63.05-.93.38-1.28.55-.59 1.37-.9 2.22-.9.92 0 1.61.34 1.99 1 .17.34.28.78.28 1.39v6.5c0 .12.07.2.2.2h2.09c.12 0 .2-.08.2-.2v-6.43c0-1.25-.2-2.03-.52-2.66l.04.02zM56.928 33.2h-2.09c-.126 0-.2.072-.2.195v4.794c0 .07-.025.09-.1.07-.94-.39-1.84-.61-2.885-.61-3.16 0-5.53 2.04-5.53 5.55 0 3.95 2.49 5.75 5.33 5.75 1.35 0 2.394-.34 3.463-1.07l1.72.85c.295.15.498 0 .498-.27V33.4c0-.12-.074-.196-.202-.196V33.2l-.004-.007zm-2.29 11.54c0 .61-.024.877-.448 1.268-.796.73-1.644.924-2.415.924-1.413 0-3.132-.83-3.132-3.705 0-2.34 1.343-3.557 3.142-3.557.9 0 1.67.198 2.34.75.476.387.525.732.525 1.552v2.747l-.01.02zm20.99-6.94h-2.09c-.12 0-.193.074-.193.196v6.745c0 .62-.025.88-.422 1.28-.795.73-1.67.93-2.564.93-1.08 0-1.82-.38-2.17-1.09-.15-.31-.23-.73-.23-1.36v-6.49c0-.11-.08-.19-.2-.19h-2.09c-.13 0-.21.08-.21.2v6.58c0 1.03.15 1.71.41 2.27.67 1.44 2.14 2.12 4.11 2.12 1.44 0 2.54-.34 3.63-1.07l1.69.85c.29.14.49 0 .49-.27V38c0-.117-.08-.186-.2-.186h-.01l.02-.014zm-14.243-4.65c-.82 0-1.47.61-1.47 1.364 0 .755.653 1.363 1.474 1.363.82 0 1.47-.608 1.47-1.363s-.64-1.364-1.47-1.364h-.01zm1.047 4.65H60.34c-.125 0-.2.074-.2.196v10.592c0 .122.075.195.2.195h2.085c.125 0 .2-.073.2-.195V37.996c0-.122-.075-.195-.2-.195h.007z"/></svg></span><span class="u-textScreenReader">Homepage</span></a></div>
+                        <div class="metabar-block u-floatRight u-xs-absolute u-xs-textAlignRight u-xs-right0 u-xs-marginRight20 u-height65 u-xs-height56">
+                            <div class="buttonSet"><a class="button button--primary button--chromeless u-accentColor--buttonNormal is-inSiteNavBar u-lineHeight30 u-height32" href="https://medium.com/m/signin?redirect=https%3A%2F%2Fmedium.com%2F%40paadams%2Fbuild-a-simple-todo-app-with-vue-js-1778ae175514" data-action="sign-in-prompt" data-redirect="https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514" data-action-source="nav_signup">Sign in / Sign up</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metabar metabar--spacer js-metabarSpacer u-height65 u-xs-height56"></div>
+                <main role="main">
+                    <article class=" u-sizeViewHeightMin100 u-overflowHidden postArticle postArticle--full u-marginBottom40" lang="en">
+                        <header class="container u-maxWidth740">
+                            <div class="postMetaHeader u-paddingBottom10 row">
+                                <div class="col u-size12of12 js-postMetaLockup">
+                                    <div class="postMetaLockup postMetaLockup--authorWithBio u-flex js-postMetaLockup">
+                                        <div class="u-flex0">
+                                            <a class="link avatar u-baseColor--link" href="https://medium.com/@paadams?source=post_header_lockup" data-action="show-user-card" data-action-source="post_header_lockup" data-action-value="2315a6d084c2" data-action-type="hover" data-user-id="2315a6d084c2" dir="auto"><img src="https://cdn-images-1.medium.com/fit/c/40/40/1*23f4oCb2Fl1hpqjG7bsDWg.jpeg" class="avatar-image avatar-image--smaller" alt="Go to the profile of paadams"></a>
+                                        </div>
+                                        <div class="u-flex1 u-paddingLeft15 u-overflowHidden"><a class="link link link--darken link--darker u-baseColor--link" href="https://medium.com/@paadams?source=post_header_lockup" data-action="show-user-card" data-action-source="post_header_lockup" data-action-value="2315a6d084c2" data-action-type="hover" data-user-id="2315a6d084c2" dir="auto">paadams</a><span class="followState js-followState buttonSet-inner" data-user-id="2315a6d084c2"><button class="button u-paddingLeft10 u-paddingRight10 u-height19 u-lineHeight13 u-verticalAlignMiddle u-fontSize12 u-uiTextMedium u-noUserSelect button--withChrome u-baseColor--buttonNormal button--withHover button--unblock js-unblockButton u-marginLeft10 u-marginTopNegative2 u-xs-hide"  data-action="sign-in-prompt" data-sign-in-action="toggle-block-user" data-requires-token="true" data-action-source="post_header_lockup"><span class="button-label  button-defaultState">Blocked</span><span class="button-label button-hoverState">Unblock</span></button>
+                                            <button class="button button--primary u-paddingLeft10 u-paddingRight10 u-height19 u-lineHeight13 u-verticalAlignMiddle u-fontSize12 u-uiTextMedium u-noUserSelect button--withChrome u-accentColor--buttonNormal button--follow js-followButton u-marginLeft10 u-marginTopNegative2 u-xs-hide" data-action="sign-in-prompt" data-sign-in-action="toggle-subscribe-user" data-requires-token="true" data-redirect="https://medium.com/_/subscribe/user/2315a6d084c2" data-action-source="post_header_lockup_follow"><span class="button-label  button-defaultState js-buttonLabel">Follow</span><span class="button-label button-activeState">Following</span></button>
+                                            </span>
+                                            <div class="postMetaInline js-testPostMetaInlineSupplemental">
+                                                <time datetime="2016-08-18T01:30:57.684Z">Aug 17, 2016</time><span class="middotDivider u-fontSize12"></span><span class="readingTime" title="8 min read"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="postArticle-content js-postField js-notesSource js-trackedPost" data-post-id="1778ae175514" data-source="post_page" data-tracking-context="postPage">
+                            <section name="030a" class="section section--body section--first">
+                                <div class="section-divider">
+                                    <hr class="section-divider">
+                                </div>
+                                <div class="section-content">
+                                    <div class="section-inner sectionLayout--insetColumn">
+                                        <h1 name="f8c2" id="f8c2" class="graf graf--h3 graf--leading graf--title">Build a Simple Todo App with Vue.js and Vuex 2.0</h1>
+                                        <p name="8d95" id="8d95" class="graf graf--p graf-after--h3">An introduction to building apps with Vue.js and Vuex 2.0</p>
+                                        <p name="126c" id="126c" class="graf graf--p graf-after--p">This tutorial will cover some of the basics of building an app using the latest versions of Vue.js and Vuex.</p>
+                                        <blockquote name="5c48" id="5c48" class="graf graf--blockquote graf-after--p">Vue.js (pronounced /vjuː/, like <strong class="markup--strong markup--blockquote-strong">view</strong>) is a library for building interactive web interfaces. The goal of Vue.js is to provide the benefits of <strong class="markup--strong markup--blockquote-strong">reactive data binding</strong> and <strong class="markup--strong markup--blockquote-strong">composable view components</strong> with an API that is as simple as possible.</blockquote>
+                                        <p name="8311" id="8311" class="graf graf--p graf-after--blockquote">Vue 2.0 is in the RC phase of its development at the time of this writing. A number of excellent features have been added to Vue in v2.0, including, but not limited to, the virtual-DOM.</p>
+                                        <p name="7c13" id="7c13" class="graf graf--p graf-after--p">Vuex also underwent a recent update and is now in RC phase. We will discuss how one should create one’s Vuex store based on the latest version of Vuex by building a simple todo app that will allow users to add, edit, complete, and remove tasks.</p>
+                                        <blockquote name="fea8" id="fea8" class="graf graf--blockquote graf-after--p graf--trailing">Vuex is an application architecture for centralized state management in Vue.js applications. It is inspired by <a href="https://facebook.github.io/flux/" data-href="https://facebook.github.io/flux/" class="markup--anchor markup--blockquote-anchor" rel="nofollow noopener" target="_blank">Flux</a> and <a href="https://github.com/rackt/redux" data-href="https://github.com/rackt/redux" class="markup--anchor markup--blockquote-anchor" rel="nofollow noopener" target="_blank">Redux</a>, but with simplified concepts and an implementation that is designed specifically to take advantage of Vue.js’ reactivity system.</blockquote>
+                                    </div>
+                                </div>
+                            </section>
+                            <section name="1795" class="section section--body">
+                                <div class="section-divider">
+                                    <hr class="section-divider">
+                                </div>
+                                <div class="section-content">
+                                    <div class="section-inner sectionLayout--insetColumn">
+                                        <p name="d6ab" id="d6ab" class="graf graf--p graf--leading"><strong class="markup--strong markup--p-strong">Getting Started</strong></p>
+                                        <p name="a8bc" id="a8bc" class="graf graf--p graf-after--p">Vue has streamlined the process of getting started with <a href="https://github.com/vuejs/vue-cli" data-href="https://github.com/vuejs/vue-cli" class="markup--anchor markup--p-anchor" rel="nofollow noopener" target="_blank">vue-cli</a>. Many in the Vue community have also contributed by creating similar projects that make getting started a breeze. In this tutorial we are going to use a more minimal setup called <a href="https://github.com/vuejs-templates/webpack-simple-2.0" data-href="https://github.com/vuejs-templates/webpack-simple-2.0" class="markup--anchor markup--p-anchor" rel="nofollow noopener" target="_blank">webpack-simple-2.0</a>. The setup process is straightforward, but since this setup does not ship with Vuex, we will have to import it into our project by:</p><pre name="e523" id="e523" class="graf graf--pre graf-after--p">npm install vuex@next</pre>
+                                        <p name="5f49" id="5f49" class="graf graf--p graf-after--pre">This will install the latest version of Vuex.</p>
+                                        <p name="9b8b" id="9b8b" class="graf graf--p graf-after--p">Inside of our project, we already have a component and Vue instance. Let’s remove the contents inside:</p><pre name="ff1b" id="ff1b" class="graf graf--pre graf-after--p">&lt;div id=”app”&gt;</pre><pre name="8b92" id="8b92" class="graf graf--pre graf-after--pre">&lt;/div&gt;</pre>
+                                        <p name="6aec" id="6aec" class="graf graf--p graf-after--pre">As well as the contents in the export expression. App.vue should now look like this:</p><pre name="e177" id="e177" class="graf graf--pre graf-after--p">&lt;template&gt;<br> &lt;div id=”app”&gt;<br> &lt;/div&gt;<br>&lt;/template&gt;</pre><pre name="1562" id="1562" class="graf graf--pre graf-after--pre">&lt;script&gt;<br>export default {</pre><pre name="97f4" id="97f4" class="graf graf--pre graf-after--pre">} <br>&lt;/script&gt;</pre><pre name="1b05" id="1b05" class="graf graf--pre graf-after--pre graf--trailing">&lt;style&gt;<br>body {<br> font-family: Helvetica, sans-serif;<br>}<br>&lt;/style&gt;</pre></div>
+                                </div>
+                            </section>
+                            <section name="0295" class="section section--body">
+                                <div class="section-divider">
+                                    <hr class="section-divider">
+                                </div>
+                                <div class="section-content">
+                                    <div class="section-inner sectionLayout--insetColumn">
+                                        <p name="1de0" id="1de0" class="graf graf--p graf--leading"><strong class="markup--strong markup--p-strong">Vuex Store</strong></p>
+                                        <p name="66f3" id="66f3" class="graf graf--p graf-after--p">Let’s begin by creating our Vuex store. Create a folder inside the src directory called store. Inside store we will add a file named store.js which will contain our entire store.</p>
+                                        <blockquote name="fede" id="fede" class="graf graf--blockquote graf-after--p">At the center of every Vuex application is the <strong class="markup--strong markup--blockquote-strong">store</strong>. A “store” is basically a container that holds your application <strong class="markup--strong markup--blockquote-strong">state</strong>. There are two things that makes a Vuex store different from a plain global object:</blockquote>
+                                        <blockquote name="97d3" id="97d3" class="graf graf--blockquote graf-after--blockquote">Vuex stores are reactive. When Vue components retrieve state from it, they will reactively and efficiently update if the store’s state changes.</blockquote>
+                                        <blockquote name="de29" id="de29" class="graf graf--blockquote graf-after--blockquote">2. You cannot directly mutate the store’s state. The only way to change a store’s state is by explicitly dispatching <strong class="markup--strong markup--blockquote-strong">mutations</strong>. This makes every state change easily track-able, and enables tooling that helps us better understand our applications.</blockquote>
+                                        <p name="0cf4" id="0cf4" class="graf graf--p graf-after--blockquote">In earlier version of Vuex, a separate file inside one’s store directory would be created for actions. One of the newest features of Vuex is the ability to define actions and getters in one’s store; in doing so, <a href="https://github.com/vuejs/vuex/issues/236" data-href="https://github.com/vuejs/vuex/issues/236" class="markup--anchor markup--p-anchor" rel="nofollow noopener" target="_blank">making one’s modules more portable and composable</a>. Here is the basic structure of our store:</p><pre name="2eec" id="2eec" class="graf graf--pre graf-after--p">import Vue from ‘vue’<br>import Vuex from ‘vuex’</pre><pre name="6bd4" id="6bd4" class="graf graf--pre graf-after--pre">Vue.use(Vuex)</pre><pre name="3348" id="3348" class="graf graf--pre graf-after--pre">export default new Vuex.Store({<br> state: {<br> <br> },<br> mutations: {</pre><pre name="2315" id="2315" class="graf graf--pre graf-after--pre"> },<br> actions: {</pre><pre name="30a7" id="30a7" class="graf graf--pre graf-after--pre"> }<br>})</pre>
+                                        <p name="1ede" id="1ede" class="graf graf--p graf-after--pre">If you are new to Vuex, the terms state, mutations, and actions might be confusing. However, the concept behind each is quite simple. We create a state object that holds the initial state when our the app starts up. Next we create an object for storing our mutations. In Vuex, mutations are basically events. Finally, we create an object to store our actions. Actions are functions that dispatch mutations. This is what our finished store will look like:</p><pre name="0c2c" id="0c2c" class="graf graf--pre graf-after--p">import Vue from ‘vue’<br>import Vuex from ‘vuex’</pre><pre name="2ca3" id="2ca3" class="graf graf--pre graf-after--pre">Vue.use(Vuex)</pre><pre name="5113" id="5113" class="graf graf--pre graf-after--pre">export default new Vuex.Store({<br> state: {<br>   todos: [],<br>   newTodo: ‘’<br> },<br> mutations: {<br>   GET_TODO(state, todo){<br>     state.newTodo = todo<br>   },<br>   ADD_TODO(state){<br>     state.todos.push({<br>       body: state.newTodo,<br>       completed: false<br>     })<br>   },<br>   EDIT_TODO(state, todo){<br>      var todos = state.todos<br>      todos.splice(todos.indexOf(todo), 1)<br>      state.todos = todos<br>      state.newTodo = todo.body<br>   },<br>   REMOVE_TODO(state, todo){<br>      var todos = state.todos<br>      todos.splice(todos.indexOf(todo), 1)<br>   },<br>   COMPLETE_TODO(state, todo){<br>     todo.completed = !todo.completed<br>   },<br>   CLEAR_TODO(state){<br>     state.newTodo = &#39;&#39;<br>   }</pre><pre name="64f3" id="64f3" class="graf graf--pre graf-after--pre">  },<br> actions: {<br>   getTodo({commit}, todo){<br>     commit(‘GET_TODO’, todo)<br>   },<br>   addTodo({commit}){<br>     commit(‘ADD_TODO’)<br>   },<br>   editTodo({commit}, todo){<br>     commit(‘EDIT_TODO’, todo)<br>   },<br>   removeTodo({commit}, todo){<br>     commit(‘REMOVE_TODO’, todo)<br>   },<br>   completeTodo({commit}, todo){<br>    commit(‘COMPLETE_TODO’, todo)<br>   },<br>   clearTodo({commit}){<br>     commit(&#39;CLEAR_TODO&#39;)<br>   }<br>})</pre>
+                                        <p name="f8c9" id="f8c9" class="graf graf--p graf-after--pre"><strong class="markup--strong markup--p-strong">State</strong></p>
+                                        <p name="af2b" id="af2b" class="graf graf--p graf-after--p">The initial state, when our app starts up, is an empty list of todos, which will store our newly added todos, and an empty string, which will hold onto the task to be added to todos.</p>
+                                        <p name="b980" id="b980" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Mutations</strong></p>
+                                        <p name="c95e" id="c95e" class="graf graf--p graf-after--p">Each mutation has a name and a handler: the handler takes as its first argument the state. It is a convention to name mutations in all caps in order to distinguish them from ordinary functions. GET_STATE takes the value entered in by the user and assigns it to state.newTodo. ADD_TODO, when triggered, adds a new todo to our list of todos — with body being set to the value of state.newTodo and completed being set to false. The mutations are straightforward, so we won’t spend much time explaining each of them in detail.</p>
+                                        <p name="37fb" id="37fb" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Actions</strong></p>
+                                        <p name="7da4" id="7da4" class="graf graf--p graf-after--p">Vuex actions expect a store as a required argument followed by optional arguments. Using argument destructuring, it is possible to pass additional arguments using the following syntax:</p><pre name="056f" id="056f" class="graf graf--pre graf-after--p">addTodo({commit}){<br>     commit(‘ADD_TODO’)<br>},</pre>
+                                        <p name="5aac" id="5aac" class="graf graf--p graf-after--pre">Without argument destructuring:</p><pre name="06ff" id="06ff" class="graf graf--pre graf-after--p">addTodo = function(store){<br>  var commit = store.commit<br>  commit(&#39;ADD_TODO&#39;)<br>}</pre>
+                                        <p name="e211" id="e211" class="graf graf--p graf-after--pre"><em class="markup--em markup--p-em">What happened to dispatch?</em></p>
+                                        <p name="37b9" id="37b9" class="graf graf--p graf-after--p">If you have experience with earlier versions of Vuex you might be thrown off by the new terms. In Vuex 2.0, dispatch is reserved for firing actions and commit is used for triggering mutations. An action is dispatched; a mutation is committed. Because our actions are defined inside of our Vuex store, actions can be dispatched in various modules with a single call:</p><pre name="45ff" id="45ff" class="graf graf--pre graf-after--p">&lt;button @click=”$store.dispatch(‘addTodo’)”&gt;Add Todo&lt;/button&gt;</pre>
+                                        <p name="a37d" id="a37d" class="graf graf--p graf-after--pre">When addTodo is dispatched, it triggers the ADD_TODO mutation and pushes a new todo to the existing list of todos. The rest of the actions, when fired, behave in a similar manner so there is no need to go over each one.</p>
+                                        <p name="f60f" id="f60f" class="graf graf--p graf-after--p">That’s it for our store. All that’s left is to import and register it in our Vue instance located in main.js:</p><pre name="a633" id="a633" class="graf graf--pre graf-after--p">import Vue from ‘vue’<br>import App from ‘./App.vue’<br>import store from ‘./store/store’</pre><pre name="edd3" id="edd3" class="graf graf--pre graf-after--pre">new Vue({<br>  el: ‘#app’,<br>  store,<br>  render: h =&gt; h(App)<br>})</pre>
+                                        <p name="be6b" id="be6b" class="graf graf--p graf-after--pre"><strong class="markup--strong markup--p-strong">Building Components</strong></p>
+                                        <p name="f05e" id="f05e" class="graf graf--p graf-after--p">Our simple todo app will be built from four different components: App, GetTodo, CurrentTodos, and CompletedTodos.</p>
+                                        <blockquote name="d418" id="d418" class="graf graf--blockquote graf-after--p">Components are one of the most powerful features of Vue.js. They help you extend basic HTML elements to encapsulate reusable code. At a high level, Components are custom elements that Vue.js’ compiler would attach specified behavior to.</blockquote>
+                                        <p name="7edd" id="7edd" class="graf graf--p graf-after--blockquote">For an application as simple as a todo, it would be okay to build the entire app from a single component. However, in this tutorial we want to demonstrate how Vuex is used to communicate between various unrelated components.</p>
+                                        <p name="43a0" id="43a0" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">GetTodo</strong></p>
+                                        <p name="2c7d" id="2c7d" class="graf graf--p graf-after--p">Before building our components, let’s first create a components sub-directory inside our src directory to store our app components. App.vue can remain in ‘./src’ directory. It is also a good idea to pull bootstrap in for basic styling inside index.html.</p>
+                                        <p name="d82e" id="d82e" class="graf graf--p graf-after--p">Our GetTodo component:</p><pre name="0ede" id="0ede" class="graf graf--pre graf-after--p">&lt;template&gt;<br>    &lt;div id=&quot;get-todo&quot; class=&quot;container&quot;&gt;<br>        &lt;input class=&quot;form-control&quot;<br>               :value=&quot;newTodo&quot;<br>               <a href="http://twitter.com/change" data-href="http://twitter.com/change" class="markup--anchor markup--pre-anchor" title="Twitter profile for @change" rel="nofollow noopener" target="_blank">@change</a>=&quot;getTodo&quot;<br>               placeholder=&quot;I need to...&quot;&gt;<br>        &lt;button class=&quot;btn btn-primary&quot; <a href="http://twitter.com/click" data-href="http://twitter.com/click" class="markup--anchor markup--pre-anchor" title="Twitter profile for @click" rel="nofollow noopener" target="_blank">@click</a>=&quot;addTodo&quot;&gt;Add Todo&lt;/button&gt;<br>    &lt;/div&gt;<br>&lt;/template&gt;<br>&lt;script&gt;<br>    export default{<br>        methods: {<br>            getTodo(e){<br>                this.$store.dispatch(&#39;getTodo&#39;, e.target.value)<br>            },<br>            addTodo(){<br>                this.$store.dispatch(&#39;addTodo&#39;)<br>                this.$store.dispatch(&#39;clearTodo&#39;)<br>            }<br>        },<br>        computed: {<br>            newTodo(){<br>                return this.$store.getters.newTodo<br>            }<br>        }</pre><pre name="a9e6" id="a9e6" class="graf graf--pre graf-after--pre">}<br>&lt;/script&gt;</pre>
+                                        <p name="eadf" id="eadf" class="graf graf--p graf-after--pre">If you are familiar with Vuex, you may be wondering about the absence of vuex option. As of v2.0, the vuex option has been <a href="https://github.com/vuejs/vuex/releases" data-href="https://github.com/vuejs/vuex/releases" class="markup--anchor markup--p-anchor" rel="nofollow noopener" target="_blank">deprecated </a>in favor of computed properties and methods. The author contends that using computed properties and methods alleviates the need to import the store everywhere it will be needed. Another change you’ll likely notice is the absence of getters. In v2.0, getters are defined in the store and accessed by:</p><pre name="ac10" id="ac10" class="graf graf--pre graf-after--p">store.getters</pre>
+                                        <p name="c2bd" id="c2bd" class="graf graf--p graf-after--pre">Inside of our store, add a getters object below the existing actions object. Add the following:</p><pre name="d4bc" id="d4bc" class="graf graf--pre graf-after--p">getters: {<br>    newTodo: state =&gt; state.newTodo,<br>    todos: state =&gt; state.todos.filter((todo) =&gt; {return   !todo.completed}),</pre><pre name="4165" id="4165" class="graf graf--pre graf-after--pre">}</pre>
+                                        <p name="14ed" id="14ed" class="graf graf--p graf-after--pre">newTodo returns the value of the new todo entered by the user. This value is bound to the input. Todos returns an array containing all of the todos whose completed value is false. Since we also want to display all the completed todos inside the CompletedTodos component, we might as well add that now:</p><pre name="b8b5" id="b8b5" class="graf graf--pre graf-after--p">completedTodos: state =&gt; state.todos.filter((todo) =&gt; {return todo.completed})</pre>
+                                        <p name="9609" id="9609" class="graf graf--p graf-after--pre">Next, we should register our components inside of our App component. We register and use components as custom elements like so:</p><pre name="c3db" id="c3db" class="graf graf--pre graf-after--p">&lt;template&gt;<br>  &lt;div id=&quot;app&quot; class=&quot;container&quot;&gt;<br>    &lt;CompletedTodos&gt;&lt;/CompletedTodos&gt;<br>    &lt;GetTodo&gt;&lt;/GetTodo&gt;<br>    &lt;CurrentTodos&gt;&lt;/CurrentTodos&gt;<br>  &lt;/div&gt;<br>&lt;/template&gt;</pre><pre name="7fba" id="7fba" class="graf graf--pre graf-after--pre">&lt;script&gt;<br>import GetTodo from &#39;./components/GetTodo.vue&#39;<br>import CurrentTodos from &#39;./components/CurrentTodos.vue&#39;<br>import CompletedTodos from &#39;./components/CompletedTodos.vue&#39;<br>export default {<br>  components: {<br>    GetTodo,<br>    CurrentTodos,<br>    CompletedTodos<br>  }<br> <br>}<br>&lt;/script&gt;</pre><pre name="16f9" id="16f9" class="graf graf--pre graf-after--pre">&lt;style&gt;<br>body {<br>  font-family: Helvetica, sans-serif;<br>}<br>&lt;/style&gt;</pre>
+                                        <p name="beb6" id="beb6" class="graf graf--p graf-after--pre"><strong class="markup--strong markup--p-strong">CurrentTodos</strong></p>
+                                        <p name="cb72" id="cb72" class="graf graf--p graf-after--p">CurrentTodos component is responsible for displaying all todos whose completed value is false. Along with displaying the body of each todo, the component also provides buttons for editing, completing, and removing a todo from the todo list. The component also shows the number of todos that are in progress. This is what CurrentTodos looks like:</p><pre name="a866" id="a866" class="graf graf--pre graf-after--p">&lt;template&gt;<br>    &lt;div id=&quot;current-todos&quot; class=&quot;container&quot;&gt;<br>        &lt;h3 v-if=&quot;todos.length &gt; 0&quot;&gt;Current({{todos.length}})&lt;/h3&gt;<br>        &lt;ul class=&quot;list-group&quot;&gt;<br>            &lt;li class=&quot;list-group-item&quot; v-for=&quot;todo in todos&quot;&gt;<br>                {{todo.body}}<br>            &lt;div class=&quot;btn-group&quot;&gt;<br>                &lt;button type=&quot;button&quot; <a href="http://twitter.com/click" data-href="http://twitter.com/click" class="markup--anchor markup--pre-anchor" title="Twitter profile for @click" rel="nofollow noopener" target="_blank">@click</a>=&quot;edit(todo)&quot; class=&quot;btn btn-default btn-sm&quot;&gt;<br>                &lt;span class=&quot;glyphicon glyphicon-edit&quot;&gt;&lt;/span&gt; Edit<br>                &lt;/button&gt;<br>                &lt;button type=&quot;button&quot; <a href="http://twitter.com/click" data-href="http://twitter.com/click" class="markup--anchor markup--pre-anchor" title="Twitter profile for @click" rel="nofollow noopener" target="_blank">@click</a>=&quot;complete(todo)&quot; class=&quot;btn btn-default btn-sm&quot;&gt;<br>                &lt;span class=&quot;glyphicon glyphicon-ok-circle&quot;&gt;&lt;/span&gt; Complete<br>                &lt;/button&gt;<br>                &lt;button type=&quot;button&quot; <a href="http://twitter.com/click" data-href="http://twitter.com/click" class="markup--anchor markup--pre-anchor" title="Twitter profile for @click" rel="nofollow noopener" target="_blank">@click</a>=&quot;remove(todo)&quot; class=&quot;btn btn-default btn-sm&quot;&gt;<br>                &lt;span class=&quot;glyphicon glyphicon-remove-circle&quot;&gt;&lt;/span&gt; Remove<br>                &lt;/button&gt;<br>            &lt;/div&gt;<br>            &lt;/li&gt;<br>        &lt;/ul&gt;<br>    &lt;/div&gt;<br>&lt;/template&gt;<br>&lt;script&gt;<br>export default{<br>    methods: {<br>        edit(todo){<br>            this.$store.dispatch(&#39;editTodo&#39;, todo)<br>        },<br>        complete(todo){<br>            this.$store.dispatch(&#39;completeTodo&#39;, todo)<br>        },<br>        remove(todo){<br>            this.$store.dispatch(&#39;removeTodo&#39;, todo)<br>        }<br>    },<br>    computed: {<br>        todos(){<br>            return this.$store.getters.todos<br>        }<br>    }<br>}<br>&lt;/script&gt;<br>&lt;style&gt;<br>    .btn-group{<br>        float: right;<br>    }<br>&lt;/style&gt;</pre>
+                                        <p name="204d" id="204d" class="graf graf--p graf-after--pre">When a user clicks on edit, the todo is removed and the value of the todo.body appears in the input. The user can then edit the body of the todo and add the edited text back into the list of current todos. Removing a todo will remove it from the todos list altogether. By completing a todo, the user changes the value of completed from false to true. Because we are only mapping over the todos that have a completed value of false, the todo will no longer be displayed in the current todos. Instead, it will be displayed as a completed todo.</p>
+                                        <p name="89db" id="89db" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">CompletedTodos</strong></p>
+                                        <p name="1b26" id="1b26" class="graf graf--p graf-after--p">This is our CompletedTodos component:</p><pre name="675d" id="675d" class="graf graf--pre graf-after--p">&lt;template&gt;<br>    &lt;div id=&quot;completed-todos&quot;&gt;<br>        &lt;h3 v-if=&quot;completed.length &gt; 0&quot;&gt;Completed({{completed.length}})&lt;/h3&gt;<br>        &lt;ul class=&quot;list-group&quot;&gt;<br>            &lt;li class=&quot;list-group-item&quot; v-for=&quot;todo in completed&quot;&gt;<br>                {{todo.body}}<br>                &lt;button type=&quot;button&quot; <a href="http://twitter.com/click" data-href="http://twitter.com/click" class="markup--anchor markup--pre-anchor" title="Twitter profile for @click" rel="nofollow noopener" target="_blank">@click</a>=&quot;remove(todo)&quot; class=&quot;btn btn-default btn-sm&quot;&gt;<br>                &lt;span class=&quot;glyphicon glyphicon-remove-circle&quot;&gt;&lt;/span&gt; Remove<br>                &lt;/button&gt;<br>            &lt;/li&gt;<br>        &lt;/ul&gt;</pre><pre name="d8b6" id="d8b6" class="graf graf--pre graf-after--pre">&lt;/div&gt;<br>&lt;/template&gt;</pre><pre name="6e7a" id="6e7a" class="graf graf--pre graf-after--pre">&lt;script&gt;<br>    export default{<br>        methods: {<br>            remove(todo){<br>                this.$store.dispatch(&#39;removeTodo&#39;, todo)<br>            }<br>        },<br>        computed: {<br>            completed(){<br>                return this.$store.getters.completedTodos<br>            }<br>        }<br>    }<br>&lt;/script&gt;</pre>
+                                        <p name="2796" id="2796" class="graf graf--p graf-after--pre graf--trailing">Completed todos are displayed as a user completes current todos. For this tutorial, we only display the number of completed todos, the body of the todo, and an option to remove the completed todos from the list.</p>
+                                    </div>
+                                </div>
+                            </section>
+                            <section name="c16e" class="section section--body section--last">
+                                <div class="section-divider">
+                                    <hr class="section-divider">
+                                </div>
+                                <div class="section-content">
+                                    <div class="section-inner sectionLayout--insetColumn">
+                                        <p name="0b7f" id="0b7f" class="graf graf--p graf--leading">There are plenty of other features we could add to our app to enhance it’s functionality, but I hope this brief introduction helped you better understand how to get started writing applications in Vue and Vuex 2.0.</p>
+                                        <p name="5af5" id="5af5" class="graf graf--p graf-after--p graf--trailing">Source code for our simple todo app can be found <a href="https://github.com/p-adams/simple-todo-tutorial/tree/master/simple-todo" data-href="https://github.com/p-adams/simple-todo-tutorial/tree/master/simple-todo" class="markup--anchor markup--p-anchor" rel="nofollow noopener" target="_blank">here</a>.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <footer class="u-paddingTop10">
+                            <div class="container u-maxWidth740">
+                                <div class="row">
+                                    <div class="col u-size12of12"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col u-size12of12 js-postTags">
+                                        <div class="u-paddingBottom10">
+                                            <ul class="tags tags--postTags tags--borderless">
+                                                <li><a class="link u-baseColor--link" href="https://medium.com/tag/javascript?source=post" data-action-source="post">JavaScript</a></li>
+                                                <li><a class="link u-baseColor--link" href="https://medium.com/tag/vuejs?source=post" data-action-source="post">Vuejs</a></li>
+                                                <li><a class="link u-baseColor--link" href="https://medium.com/tag/vuex?source=post" data-action-source="post">Vuex</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row js-postActionsFooter">
+                                    <div class="postActions col u-size12of12">
+                                        <div class="u-floatLeft buttonSet buttonSet--withLabels">
+                                            <div class="buttonSet-inner">
+                                                <div class="js-actionRecommend" data-post-id="1778ae175514" data-is-icon-29px="true" data-has-recommend-list="true" data-source="post_actions_footer">
+                                                    <button class="button button--primary button--large button--chromeless is-touchIconFadeInPulse u-accentColor--buttonNormal button--withIcon button--withSvgIcon u-accentColor--iconLight js-actionRecommendButton" title="Recommend to share this article with your followers and let the author know you liked it" aria-label="Recommend to share this article with your followers and let the author know you liked it" data-action="sign-in-prompt" data-sign-in-action="upvote" data-requires-token="true" data-redirect="https://medium.com/_/vote/p/1778ae175514" data-action-source="post_actions_footer"><span class="button-defaultState"><span class="svgIcon svgIcon--heart svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M16.215 23.716c-.348.288-.984.826-1.376 1.158a.526.526 0 0 1-.68 0c-.36-.307-.92-.78-1.22-1.03C9.22 20.734 3 15.527 3 10.734 3 7.02 5.916 4 9.5 4c1.948 0 3.77.898 5 2.434C15.73 4.898 17.552 4 19.5 4c3.584 0 6.5 3.02 6.5 6.734 0 4.9-6.125 9.96-9.785 12.982zM19.5 5.2c-1.774 0-3.423.923-4.41 2.468a.699.699 0 0 1-.59.323.706.706 0 0 1-.59-.32c-.988-1.54-2.637-2.47-4.41-2.47-2.922 0-5.3 2.49-5.3 5.54 0 4.23 6.19 9.41 9.517 12.19.217.18.566.48.783.66l.952-.79c3.496-2.88 9.348-7.72 9.348-12.05 0-3.05-2.378-5.53-5.3-5.53z"/></svg></span></span><span class="button-activeState"><span class="svgIcon svgIcon--heartFilled svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M19.5 4c-1.948 0-3.77.898-5 2.434C13.27 4.898 11.448 4 9.5 4 5.916 4 3 7.02 3 10.734c0 4.793 6.227 10 9.95 13.11.296.25.853.723 1.212 1.03.196.166.48.166.677 0 .39-.332 1.02-.87 1.37-1.158 3.66-3.022 9.79-8.08 9.79-12.982C26 7.02 23.08 4 19.5 4z" fill-rule="evenodd"/></svg></span></span>
+                                                    </button>
+                                                    <button class="button button--chromeless u-baseColor--buttonNormal" data-action="show-recommends" data-action-value="1778ae175514">84</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="u-floatRight buttonSet buttonSet--narrow">
+                                            <div class="buttonSet-inner">
+                                                <button class="button button--large button--dark button--chromeless is-touchIconBlackPulse u-baseColor--buttonDark button--withIcon button--withSvgIcon" data-action="scroll-to-responses" data-action-source="post_actions_footer"><span class="svgIcon svgIcon--response svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M21.27 20.058c1.89-1.826 2.754-4.17 2.754-6.674C24.024 8.21 19.67 4 14.1 4 8.53 4 4 8.21 4 13.384c0 5.175 4.53 9.385 10.1 9.385 1.007 0 2-.14 2.95-.41.285.25.592.49.918.7 1.306.87 2.716 1.31 4.19 1.31.276-.01.494-.14.6-.36a.625.625 0 0 0-.052-.65c-.61-.84-1.042-1.71-1.282-2.58a5.417 5.417 0 0 1-.154-.75zm-3.85 1.324l-.083-.28-.388.12a9.72 9.72 0 0 1-2.85.424c-4.96 0-8.99-3.706-8.99-8.262 0-4.556 4.03-8.263 8.99-8.263 4.95 0 8.77 3.71 8.77 8.27 0 2.25-.75 4.35-2.5 5.92l-.24.21v.32c0 .07 0 .19.02.37.03.29.1.6.19.92.19.7.49 1.4.89 2.08-.93-.14-1.83-.49-2.67-1.06-.34-.22-.88-.48-1.16-.74z"/></svg></span></button>
+                                                <button class="button button--chromeless u-baseColor--buttonNormal" data-action="scroll-to-responses">5</button>
+                                            </div>
+                                            <div class="buttonSet-inner">
+                                                <button class="button button--large button--dark button--chromeless is-touchIconBlackPulse u-baseColor--buttonDark button--withIcon button--withSvgIcon" title="Share on Twitter" aria-label="Share on Twitter" data-action="share-on-twitter" data-action-source="post_actions_footer"><span class="svgIcon svgIcon--twitter svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M21.967 11.8c.018 5.93-4.607 11.18-11.177 11.18-2.172 0-4.25-.62-6.047-1.76l-.268.422-.038.5.186.013.168.012c.3.02.44.032.6.046 2.06-.026 3.95-.686 5.49-1.86l1.12-.85-1.4-.048c-1.57-.055-2.92-1.08-3.36-2.51l-.48.146-.05.5c.22.03.48.05.75.08.48-.02.87-.07 1.25-.15l2.33-.49-2.32-.49c-1.68-.35-2.91-1.83-2.91-3.55 0-.05 0-.01-.01.03l-.49-.1-.25.44c.63.36 1.35.57 2.07.58l1.7.04L7.4 13c-.978-.662-1.59-1.79-1.618-3.047a4.08 4.08 0 0 1 .524-1.8l-.825.07a12.188 12.188 0 0 0 8.81 4.515l.59.033-.06-.59v-.02c-.05-.43-.06-.63-.06-.87a3.617 3.617 0 0 1 6.27-2.45l.2.21.28-.06c1.01-.22 1.94-.59 2.73-1.09l-.75-.56c-.1.36-.04.89.12 1.36.23.68.58 1.13 1.17.85l-.21-.45-.42-.27c-.52.8-1.17 1.48-1.92 2L22 11l.016.28c.013.2.014.35 0 .52v.04zm.998.038c.018-.22.017-.417 0-.66l-.498.034.284.41a8.183 8.183 0 0 0 2.2-2.267l.97-1.48-1.6.755c.17-.08.3-.02.34.03a.914.914 0 0 1-.13-.292c-.1-.297-.13-.64-.1-.766l.36-1.254-1.1.695c-.69.438-1.51.764-2.41.963l.48.15a4.574 4.574 0 0 0-3.38-1.484 4.616 4.616 0 0 0-4.61 4.613c0 .29.02.51.08.984l.01.02.5-.06.03-.5c-3.17-.18-6.1-1.7-8.08-4.15l-.48-.56-.36.64c-.39.69-.62 1.48-.65 2.28.04 1.61.81 3.04 2.06 3.88l.3-.92c-.55-.02-1.11-.17-1.6-.45l-.59-.34-.14.67c-.02.08-.02.16 0 .24-.01 2.12 1.55 4.01 3.69 4.46l.1-.49-.1-.49c-.33.07-.67.12-1.03.14-.18-.02-.43-.05-.64-.07l-.76-.09.23.73c.57 1.84 2.29 3.14 4.28 3.21l-.28-.89a8.252 8.252 0 0 1-4.85 1.66c-.12-.01-.26-.02-.56-.05l-.17-.01-.18-.01L2.53 21l1.694 1.07a12.233 12.233 0 0 0 6.58 1.917c7.156 0 12.2-5.73 12.18-12.18l-.002.04z"/></svg></span></button>
+                                            </div>
+                                            <div class="buttonSet-inner">
+                                                <button class="button button--large button--dark button--chromeless is-touchIconBlackPulse u-baseColor--buttonDark button--withIcon button--withSvgIcon" title="Share on Facebook" aria-label="Share on Facebook" data-action="share-on-facebook" data-action-source="post_actions_footer"><span class="svgIcon svgIcon--facebook svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M16.39 23.61v-5.808h1.846a.55.55 0 0 0 .546-.48l.36-2.797a.551.551 0 0 0-.547-.62H16.39V12.67c0-.67.12-.813.828-.813h1.474a.55.55 0 0 0 .55-.55V8.803a.55.55 0 0 0-.477-.545c-.436-.06-1.36-.116-2.22-.116-2.5 0-4.13 1.62-4.13 4.248v1.513H10.56a.551.551 0 0 0-.55.55v2.797c0 .304.248.55.55.55h1.855v5.76c-4.172-.96-7.215-4.7-7.215-9.1 0-5.17 4.17-9.36 9.31-9.36 5.14 0 9.31 4.19 9.31 9.36 0 4.48-3.155 8.27-7.43 9.15M14.51 4C8.76 4 4.1 8.684 4.1 14.46c0 5.162 3.75 9.523 8.778 10.32a.55.55 0 0 0 .637-.543v-6.985a.551.551 0 0 0-.55-.55H11.11v-1.697h1.855a.55.55 0 0 0 .55-.55v-2.063c0-2.02 1.136-3.148 3.03-3.148.567 0 1.156.027 1.597.06v1.453h-.924c-1.363 0-1.93.675-1.93 1.912v1.78c0 .3.247.55.55.55h2.132l-.218 1.69H15.84c-.305 0-.55.24-.55.55v7.02c0 .33.293.59.623.54 5.135-.7 9.007-5.11 9.007-10.36C24.92 8.68 20.26 4 14.51 4"/></svg></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="js-postPromotionWrapper postPromotionWrapper" data-location-id="footer_above_post_attribution"></div>
+                            <div class="u-maxWidth740 u-paddingTop20 u-marginTop10 u-borderTopLightest container u-paddingBottom20 u-xs-paddingBottom10 js-postAttributionFooterContainer">
+                                <div class="row js-postFooterInfo">
+                                    <div class="col u-size12of12">
+                                        <li class="u-block u-paddingBottom18 js-cardUser">
+                                            <div class="u-marginLeft20 u-floatRight"><span class="followState js-followState buttonSet-inner" data-user-id="2315a6d084c2"><button class="button button--small u-noUserSelect button--withChrome u-baseColor--buttonNormal button--withHover button--unblock js-unblockButton"  data-action="sign-in-prompt" data-sign-in-action="toggle-block-user" data-requires-token="true" data-action-source="footer_card"><span class="button-label  button-defaultState">Blocked</span><span class="button-label button-hoverState">Unblock</span></button>
+                                                <button class="button button--primary button--small u-noUserSelect button--withChrome u-accentColor--buttonNormal button--follow js-followButton" data-action="sign-in-prompt" data-sign-in-action="toggle-subscribe-user" data-requires-token="true" data-redirect="https://medium.com/_/subscribe/user/2315a6d084c2" data-action-source="footer_card_follow"><span class="button-label  button-defaultState js-buttonLabel">Follow</span><span class="button-label button-activeState">Following</span></button>
+                                                </span>
+                                            </div>
+                                            <div class="u-tableCell ">
+                                                <a class="link avatar u-baseColor--link" href="https://medium.com/@paadams?source=footer_card" title="Go to the profile of paadams" aria-label="Go to the profile of paadams" data-action-source="footer_card" data-user-id="2315a6d084c2" dir="auto"><img src="https://cdn-images-1.medium.com/fit/c/60/60/1*23f4oCb2Fl1hpqjG7bsDWg.jpeg" class="avatar-image avatar-image--small" alt="Go to the profile of paadams"></a>
+                                            </div>
+                                            <div class="u-tableCell u-verticalAlignMiddle u-breakWord u-paddingLeft15">
+                                                <h3 class="u-fontSize18 u-lineHeightTighter u-marginBottom4"><a class="link link--primary u-accentColor--hoverTextNormal"   href="https://medium.com/@paadams" property="cc:attributionName" title="Go to the profile of paadams" aria-label="Go to the profile of paadams" rel="author cc:attributionUrl" data-user-id="2315a6d084c2" dir="auto">paadams</a></h3></div>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="js-postFooterPlacements"></div>
+                            <div class="u-padding0 u-clearfix u-backgroundGrayLightest u-print-hide supplementalPostContent js-responsesWrapper"></div>
+                            <div class="supplementalPostContent js-readNext"></div>
+                            <div class="supplementalPostContent js-heroPromo"></div>
+                        </footer>
+                    </article>
+                </main>
+                <div class="u-marginAuto u-maxWidth1000">
+                    <div class="js-postShareWidget u-foreground u-sm-hide u-transition--fadeOut300 u-fixed">
+                        <ul>
+                            <li class="u-uiTextSemibold u-textAlignCenter u-textColorNormal u-fontSize12 u-textUppercase">Share</li>
+                            <li class="u-textAlignCenter">
+                                <div class="js-actionRecommend" data-post-id="1778ae175514" data-is-icon-29px="true" data-is-vertical="true" data-has-recommend-list="true" data-source="post_share_widget">
+                                    <button class="button button--primary button--large button--chromeless is-touchIconFadeInPulse u-accentColor--buttonNormal button--withIcon button--withSvgIcon u-accentColor--iconLight js-actionRecommendButton" title="Recommend to share this article with your followers and let the author know you liked it" aria-label="Recommend to share this article with your followers and let the author know you liked it" data-action="sign-in-prompt" data-sign-in-action="upvote" data-requires-token="true" data-redirect="https://medium.com/_/vote/p/1778ae175514" data-action-source="post_share_widget"><span class="button-defaultState"><span class="svgIcon svgIcon--heart svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M16.215 23.716c-.348.288-.984.826-1.376 1.158a.526.526 0 0 1-.68 0c-.36-.307-.92-.78-1.22-1.03C9.22 20.734 3 15.527 3 10.734 3 7.02 5.916 4 9.5 4c1.948 0 3.77.898 5 2.434C15.73 4.898 17.552 4 19.5 4c3.584 0 6.5 3.02 6.5 6.734 0 4.9-6.125 9.96-9.785 12.982zM19.5 5.2c-1.774 0-3.423.923-4.41 2.468a.699.699 0 0 1-.59.323.706.706 0 0 1-.59-.32c-.988-1.54-2.637-2.47-4.41-2.47-2.922 0-5.3 2.49-5.3 5.54 0 4.23 6.19 9.41 9.517 12.19.217.18.566.48.783.66l.952-.79c3.496-2.88 9.348-7.72 9.348-12.05 0-3.05-2.378-5.53-5.3-5.53z"/></svg></span></span><span class="button-activeState"><span class="svgIcon svgIcon--heartFilled svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M19.5 4c-1.948 0-3.77.898-5 2.434C13.27 4.898 11.448 4 9.5 4 5.916 4 3 7.02 3 10.734c0 4.793 6.227 10 9.95 13.11.296.25.853.723 1.212 1.03.196.166.48.166.677 0 .39-.332 1.02-.87 1.37-1.158 3.66-3.022 9.79-8.08 9.79-12.982C26 7.02 23.08 4 19.5 4z" fill-rule="evenodd"/></svg></span></span>
+                                    </button>
+                                    <button class="button button--chromeless u-baseColor--buttonNormal  u-block u-marginAuto u-marginTopNegative5" data-action="show-recommends" data-action-value="1778ae175514">84</button>
+                                </div>
+                            </li>
+                            <li class="u-textAlignCenter">
+                                <button class="button button--large button--dark button--chromeless is-touchIconBlackPulse u-baseColor--buttonDark button--withIcon button--withSvgIcon" title="Share on Twitter" aria-label="Share on Twitter" data-action="share-on-twitter" data-action-source="post_share_widget"><span class="svgIcon svgIcon--twitter svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M21.967 11.8c.018 5.93-4.607 11.18-11.177 11.18-2.172 0-4.25-.62-6.047-1.76l-.268.422-.038.5.186.013.168.012c.3.02.44.032.6.046 2.06-.026 3.95-.686 5.49-1.86l1.12-.85-1.4-.048c-1.57-.055-2.92-1.08-3.36-2.51l-.48.146-.05.5c.22.03.48.05.75.08.48-.02.87-.07 1.25-.15l2.33-.49-2.32-.49c-1.68-.35-2.91-1.83-2.91-3.55 0-.05 0-.01-.01.03l-.49-.1-.25.44c.63.36 1.35.57 2.07.58l1.7.04L7.4 13c-.978-.662-1.59-1.79-1.618-3.047a4.08 4.08 0 0 1 .524-1.8l-.825.07a12.188 12.188 0 0 0 8.81 4.515l.59.033-.06-.59v-.02c-.05-.43-.06-.63-.06-.87a3.617 3.617 0 0 1 6.27-2.45l.2.21.28-.06c1.01-.22 1.94-.59 2.73-1.09l-.75-.56c-.1.36-.04.89.12 1.36.23.68.58 1.13 1.17.85l-.21-.45-.42-.27c-.52.8-1.17 1.48-1.92 2L22 11l.016.28c.013.2.014.35 0 .52v.04zm.998.038c.018-.22.017-.417 0-.66l-.498.034.284.41a8.183 8.183 0 0 0 2.2-2.267l.97-1.48-1.6.755c.17-.08.3-.02.34.03a.914.914 0 0 1-.13-.292c-.1-.297-.13-.64-.1-.766l.36-1.254-1.1.695c-.69.438-1.51.764-2.41.963l.48.15a4.574 4.574 0 0 0-3.38-1.484 4.616 4.616 0 0 0-4.61 4.613c0 .29.02.51.08.984l.01.02.5-.06.03-.5c-3.17-.18-6.1-1.7-8.08-4.15l-.48-.56-.36.64c-.39.69-.62 1.48-.65 2.28.04 1.61.81 3.04 2.06 3.88l.3-.92c-.55-.02-1.11-.17-1.6-.45l-.59-.34-.14.67c-.02.08-.02.16 0 .24-.01 2.12 1.55 4.01 3.69 4.46l.1-.49-.1-.49c-.33.07-.67.12-1.03.14-.18-.02-.43-.05-.64-.07l-.76-.09.23.73c.57 1.84 2.29 3.14 4.28 3.21l-.28-.89a8.252 8.252 0 0 1-4.85 1.66c-.12-.01-.26-.02-.56-.05l-.17-.01-.18-.01L2.53 21l1.694 1.07a12.233 12.233 0 0 0 6.58 1.917c7.156 0 12.2-5.73 12.18-12.18l-.002.04z"/></svg></span></button>
+                            </li>
+                            <li class="u-textAlignCenter">
+                                <button class="button button--large button--dark button--chromeless is-touchIconBlackPulse u-baseColor--buttonDark button--withIcon button--withSvgIcon" title="Share on Facebook" aria-label="Share on Facebook" data-action="share-on-facebook" data-action-source="post_share_widget"><span class="svgIcon svgIcon--facebook svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M16.39 23.61v-5.808h1.846a.55.55 0 0 0 .546-.48l.36-2.797a.551.551 0 0 0-.547-.62H16.39V12.67c0-.67.12-.813.828-.813h1.474a.55.55 0 0 0 .55-.55V8.803a.55.55 0 0 0-.477-.545c-.436-.06-1.36-.116-2.22-.116-2.5 0-4.13 1.62-4.13 4.248v1.513H10.56a.551.551 0 0 0-.55.55v2.797c0 .304.248.55.55.55h1.855v5.76c-4.172-.96-7.215-4.7-7.215-9.1 0-5.17 4.17-9.36 9.31-9.36 5.14 0 9.31 4.19 9.31 9.36 0 4.48-3.155 8.27-7.43 9.15M14.51 4C8.76 4 4.1 8.684 4.1 14.46c0 5.162 3.75 9.523 8.778 10.32a.55.55 0 0 0 .637-.543v-6.985a.551.551 0 0 0-.55-.55H11.11v-1.697h1.855a.55.55 0 0 0 .55-.55v-2.063c0-2.02 1.136-3.148 3.03-3.148.567 0 1.156.027 1.597.06v1.453h-.924c-1.363 0-1.93.675-1.93 1.912v1.78c0 .3.247.55.55.55h2.132l-.218 1.69H15.84c-.305 0-.55.24-.55.55v7.02c0 .33.293.59.623.54 5.135-.7 9.007-5.11 9.007-10.36C24.92 8.68 20.26 4 14.51 4"/></svg></span></button>
+                            </li>
+                            <li class="u-textAlignCenter">
+                                <button class="button button--large button--dark button--chromeless is-touchIconFadeInPulse u-baseColor--buttonDark button--withIcon button--withSvgIcon button--bookmark js-bookmarkButton" title="Bookmark this story to read later" aria-label="Bookmark this story to read later" data-action="sign-in-prompt" data-sign-in-action="add-to-bookmarks" data-requires-token="true" data-redirect="https://medium.com/_/bookmark/p/1778ae175514"><span class="button-defaultState"><span class="svgIcon svgIcon--bookmark svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M19.385 4h-9.77A2.623 2.623 0 0 0 7 6.615V23.01a1.022 1.022 0 0 0 1.595.847l5.905-4.004 5.905 4.004A1.022 1.022 0 0 0 22 23.011V6.62A2.625 2.625 0 0 0 19.385 4zM21 23l-5.91-3.955-.148-.107a.751.751 0 0 0-.884 0l-.147.107L8 23V6.615C8 5.725 8.725 5 9.615 5h9.77C20.275 5 21 5.725 21 6.615V23z" fill-rule="evenodd"/></svg></span></span><span class="button-activeState"><span class="svgIcon svgIcon--bookmarkFilled svgIcon--29px"><svg class="svgIcon-use" width="29" height="29" viewBox="0 0 29 29" ><path d="M19.385 4h-9.77A2.623 2.623 0 0 0 7 6.615V23.01a1.022 1.022 0 0 0 1.595.847l5.905-4.004 5.905 4.004A1.022 1.022 0 0 0 22 23.011V6.62A2.625 2.625 0 0 0 19.385 4z" fill-rule="evenodd"/></svg></span></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="u-fixed u-bottom0 u-sizeFullWidth u-backgroundWhite u-boxShadowTop u-borderBox u-paddingTop10 u-paddingBottom10 u-zIndexMetabar u-xs-paddingLeft10 u-xs-paddingRight10 js-stickyFooter">
+                    <div class="u-maxWidth700 u-marginAuto u-flexCenter">
+                        <div class="u-fontSize16 u-flex1 u-flexCenter">
+                            <div class="u-flex0 u-inlineBlock u-paddingRight20 u-xs-paddingRight10">
+                                <a class="link avatar u-inline u-baseColor--link" href="https://medium.com/@paadams" data-action="show-user-card" data-action-value="2315a6d084c2" data-action-type="hover" data-user-id="2315a6d084c2" dir="auto"><img src="https://cdn-images-1.medium.com/fit/c/40/40/1*23f4oCb2Fl1hpqjG7bsDWg.jpeg" class="avatar-image avatar-image--smaller" alt="Go to the profile of paadams"></a>
+                            </div>
+                            <div class="u-flex1 u-inlineBlock">
+                                <div class="u-xs-hide">Never miss a story from<strong> paadams</strong>, when you sign up for Medium. <a class="link link--accent u-accentColor--textNormal u-accentColor--textDarken u-baseColor--link" href="https://medium.com/@Medium/personalize-your-medium-experience-with-users-publications-tags-26a41ab1ee0c#.hx4zuv3mg" data-action-source="sticky_footer">Learn more</a></div>
+                                <div class="u-xs-show">Never miss a story from<strong> paadams</strong></div>
+                            </div>
+                        </div>
+                        <div class="u-marginLeft50 u-xs-marginAuto"><span class="followState js-followState buttonSet-inner" data-user-id="2315a6d084c2"><button class="button u-noUserSelect button--withChrome u-baseColor--buttonNormal button--withHover button--unblock js-unblockButton u-uiTextSemibold u-textUppercase u-fontSize12"  data-action="sign-in-prompt" data-sign-in-action="toggle-block-user" data-requires-token="true" data-action-source="sticky_footer"><span class="button-label  button-defaultState">Blocked</span><span class="button-label button-hoverState">Unblock</span></button>
+                            <button class="button button--primary is-active u-noUserSelect button--withChrome u-accentColor--buttonNormal button--follow js-followButton u-uiTextSemibold u-textUppercase u-fontSize12" data-action="sign-in-prompt" data-sign-in-action="toggle-subscribe-user" data-requires-token="true" data-redirect="https://medium.com/_/subscribe/user/2315a6d084c2" data-action-source="sticky_footer_follow"><span class="button-label  button-defaultState js-buttonLabel">Follow</span><span class="button-label button-activeState">Get updates</span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loadingBar"></div>
+    <script>
+        // <![CDATA[
+        window["obvInit"] = function(opt_embedded) {
+                window["obvInit"]["embedded"] = opt_embedded;
+                window["obvInit"]["ready"] = true;
+            }
+            // ]]>
+    </script>
+    <script>
+        // <![CDATA[
+        var GLOBALS = {
+                "audioUrl": "https://d1fcbxp97j4nb2.cloudfront.net",
+                "baseUrl": "https://medium.com",
+                "buildLabel": "29915-d894342",
+                "currentUser": {
+                    "userId": "lo_b180a0c1c995",
+                    "isVerified": false,
+                    "subscriberEmail": ""
+                },
+                "currentUserHasUnverifiedEmail": false,
+                "isAuthenticated": false,
+                "isCurrentUserVerified": false,
+                "language": "pt-br",
+                "mediumTwitterScreenName": "medium",
+                "miroUrl": "https://cdn-images-1.medium.com",
+                "moduleUrls": {
+                    "base": "https://cdn-static-1.medium.com/_/fp/gen-js/main-base.bundle.Bw0Xy6qpotBbCnO7OynPhg.js",
+                    "notes": "https://cdn-static-1.medium.com/_/fp/gen-js/main-notes.bundle.uQXwY5I3cuimRvyuN2uxbQ.js",
+                    "payments": "https://cdn-static-1.medium.com/_/fp/gen-js/main-payments.bundle.zuT2hD8EuW7BSqUP8fYEUg.js",
+                    "posters": "https://cdn-static-1.medium.com/_/fp/gen-js/main-posters.bundle.2HN2GkxjcYOI2MzE7jlHAQ.js",
+                    "common-async": "https://cdn-static-1.medium.com/_/fp/gen-js/main-common-async.bundle.7y5Ig-0w3DMZenhpgB7cYQ.js",
+                    "stats": "https://cdn-static-1.medium.com/_/fp/gen-js/main-stats.bundle.reobo5iPkQGO26oQTdae1A.js",
+                    "home-screens": "https://cdn-static-1.medium.com/_/fp/gen-js/main-home-screens.bundle.Rwl2IpqzFAnpgyiiETJP7w.js",
+                    "misc-screens": "https://cdn-static-1.medium.com/_/fp/gen-js/main-misc-screens.bundle.NDrXVhqKyPb576D3TnyvUA.js"
+                },
+                "previewConfig": {
+                    "weightThreshold": 1,
+                    "weightImageParagraph": 0.51,
+                    "weightIframeParagraph": 0.8,
+                    "weightTextParagraph": 0.08,
+                    "weightEmptyParagraph": 0,
+                    "weightP": 0.003,
+                    "weightH": 0.005,
+                    "weightBq": 0.003,
+                    "minPTextLength": 60,
+                    "truncateBoundaryChars": 20,
+                    "detectTitle": true,
+                    "detectTitleLevThreshold": 0.15
+                },
+                "productName": "Medium",
+                "supportsEdit": true,
+                "termsUrl": "//medium.com/policy/9db0094a1e0f",
+                "textshotHost": "textshot.medium.com",
+                "transactionId": "1501003246271:ee9d85c557d1",
+                "useragent": {
+                    "browser": "chrome",
+                    "family": "chrome",
+                    "os": "",
+                    "version": 59,
+                    "supportsDesktopEdit": true,
+                    "supportsInteract": true,
+                    "supportsView": true,
+                    "isMobile": false,
+                    "isTablet": false,
+                    "isNative": false,
+                    "supportsFileAPI": true,
+                    "isTier1": true,
+                    "clientVersion": "",
+                    "unknownParagraphsBad": false,
+                    "clientChannel": "",
+                    "supportsRealScrollEvents": true,
+                    "supportsVhUnits": true,
+                    "ruinsViewportSections": false,
+                    "supportsHtml5Video": true,
+                    "supportsMagicUnderlines": true,
+                    "isWebView": false,
+                    "isFacebookWebView": false,
+                    "supportsProgressiveMedia": true,
+                    "supportsPromotedPosts": true,
+                    "isBot": false,
+                    "isNativeIphone": false,
+                    "supportsCssVariables": true,
+                    "supportsVideoSections": false,
+                    "emojiSupportLevel": 1,
+                    "supportsScrollableMetabar": true
+                },
+                "variants": {
+                    "allow_access": true,
+                    "allow_signup": true,
+                    "allow_test_auth": "disallow",
+                    "signin_services": "twitter,facebook,google,email,google-fastidv",
+                    "signup_services": "twitter,facebook,google,email,google-fastidv",
+                    "android_rating_prompt_recommend_threshold": 5,
+                    "google_sign_in_android": true,
+                    "enable_onboarding": true,
+                    "ios_custom_miro_url": "https://cdn-images-1.medium.com",
+                    "reengagement_notification_duration": 3,
+                    "enable_adsnative_integration": true,
+                    "browsable_stream_config_bucket": "curated-topics",
+                    "ios_small_post_preview_truncation_length": 5.5,
+                    "ios_large_post_preview_truncation_length": 5.5,
+                    "disable_ios_catalog_badging": true,
+                    "enable_series_creation": true,
+                    "enable_your_series_pages": true,
+                    "enable_productionized_series": true,
+                    "enable_dedicated_series_tab_api_ios": true,
+                    "enable_clap_milestone_notifications": true,
+                    "enable_series_stats_page": true,
+                    "enable_direct_auth_connect": true,
+                    "enable_post_import": true,
+                    "enable_sponsored_post_labelling": true,
+                    "enable_logged_in_follow_on_collection_post": true,
+                    "promoted_story_placement_locations": "POST_PAGE_FOOTER",
+                    "enable_chunky_home_page": true,
+                    "enable_see_more_stories_from_network": true,
+                    "enable_sms_app_promo": true,
+                    "enable_export_members": true,
+                    "enable_series_card_background_creation": true,
+                    "enable_ios_onboarding_notifications": true,
+                    "available_membership_plans": "60e220181034",
+                    "double_write_post_from_followed_tag_items": true,
+                    "enable_sms": true,
+                    "enable_series_in_user_profiles": true,
+                    "enable_new_logged_out_bento_operation": true,
+                    "is_not_medium_subscriber": true,
+                    "subs_landing_copy_experiments": "short",
+                    "logged_out_homepage_promo": "content",
+                    "daily_digest_topics": true,
+                    "enable_emoji_in_editor": true,
+                    "sticky_metabar_and_wordmark_on_post_page": true,
+                    "glyph_font_set": "m",
+                    "enable_upsell_tracking": true,
+                    "post_page_signin_copy": "control",
+                    "enable_sequence_carousel": true,
+                    "enable_multirecommends_total_count": true,
+                    "enable_multirecommends_person_count": true,
+                    "membership_reminder_email_subject_bucket": "control",
+                    "enable_noteworthy_promo": true,
+                    "max_premium_content_per_user_under_metering": 3
+                },
+                "xsrfToken": "",
+                "iosAppId": "828256236",
+                "supportEmail": "yourfriends@medium.com",
+                "teamName": "Team Medium",
+                "fp": {
+                    "/icons/favicon.svg": "https://cdn-static-1.medium.com/_/fp/icons/favicon.KjTfUJo7yJH_fCoUzzH3cg.svg",
+                    "/icons/favicon-dev-editor.ico": "https://cdn-static-1.medium.com/_/fp/icons/favicon-dev-editor.YKKRxBO8EMvIqhyCwIiJeQ.ico",
+                    "/icons/favicon-hatch-editor.ico": "https://cdn-static-1.medium.com/_/fp/icons/favicon-hatch-editor.BuEyHIqlyh2s_XEk4Rl32Q.ico",
+                    "/icons/favicon-medium-editor.ico": "https://cdn-static-1.medium.com/_/fp/icons/favicon-medium-editor.PiakrZWB7Yb80quUVQWM6g.ico"
+                },
+                "authBaseUrl": "https://medium.com",
+                "imageUploadSizeMb": 25,
+                "isAuthDomainRequest": true,
+                "algoliaApiEndpoint": "https://MQ57UUUQZ2-dsn.algolia.net",
+                "algoliaAppId": "MQ57UUUQZ2",
+                "algoliaSearchOnlyApiKey": "394474ced050e3911ae2249ecc774921",
+                "iosAppStoreUrl": "https://itunes.apple.com/app/medium-everyones-stories/id828256236?pt=698524&mt=8",
+                "iosAppLinkBaseUrl": "medium:",
+                "algoliaIndexPrefix": "medium_",
+                "androidPlayStoreUrl": "https://play.google.com/store/apps/details?id=com.medium.reader",
+                "googleClientId": "216296035834-k1k6qe060s2tp2a2jam4ljdcms00sttg.apps.googleusercontent.com",
+                "androidPackage": "com.medium.reader",
+                "androidPlayStoreMarketScheme": "market://details?id=com.medium.reader",
+                "googleAuthUri": "https://accounts.google.com/o/oauth2/auth",
+                "androidScheme": "medium",
+                "layoutData": {
+                    "useDynamicScripts": false,
+                    "googleAnalyticsTrackingCode": "UA-24232453-2",
+                    "jsShivUrl": "https://cdn-static-1.medium.com/_/fp/js/shiv.RI2ePTZ5gFmMgLzG5bEVAA.js",
+                    "useDynamicCss": false,
+                    "faviconUrl": "https://cdn-static-1.medium.com/_/fp/icons/favicon-medium.TAS6uQ-Y7kcKgi0xjcYHXw.ico",
+                    "faviconImageId": "1*W0nmth_X8nFKjn6BZ388UQ.png",
+                    "fontSets": [{
+                        "id": 1,
+                        "url": "https://cdn-static-1.medium.com/_/fp/css/fonts-base.by5Oi_VbnwEIvhnWIsuUjA.css"
+                    }, {
+                        "id": 4,
+                        "url": "https://cdn-static-1.medium.com/_/fp/css/fonts-lazy-base.g08Jj5TZPAiuPWj5YNUsSg.css"
+                    }, {
+                        "id": 6,
+                        "url": "https://cdn-static-1.medium.com/_/fp/css/fonts-latin-base.141WxxXgxGxNcfeza73H7Q.css"
+                    }, {
+                        "id": 7,
+                        "url": "https://cdn-static-1.medium.com/_/fp/css/fonts-lazy-latin-base.jMU532QDmysQMOINr-cr2A.css"
+                    }],
+                    "editorFaviconUrl": "https://cdn-static-1.medium.com/_/fp/icons/favicon-medium-editor.PiakrZWB7Yb80quUVQWM6g.ico"
+                },
+                "authBaseUrlRev": "moc.muidem//:sptth",
+                "isDnt": false,
+                "stripePublishableKey": "pk_live_7FReX44VnNIInZwrIIx6ghjl",
+                "archiveUploadSizeMb": 100,
+                "paymentData": {
+                    "currencies": {
+                        "1": {
+                            "label": "US Dollar",
+                            "external": "usd"
+                        }
+                    },
+                    "countries": {
+                        "1": {
+                            "label": "United States of America",
+                            "external": "US"
+                        }
+                    },
+                    "accountTypes": {
+                        "1": {
+                            "label": "Individual",
+                            "external": "individual"
+                        },
+                        "2": {
+                            "label": "Company",
+                            "external": "company"
+                        }
+                    }
+                },
+                "previewConfig2": {
+                    "weightThreshold": 1,
+                    "weightImageParagraph": 0.05,
+                    "raiseImage": true,
+                    "enforceHeaderHierarchy": true,
+                    "isImageInsetRight": true
+                },
+                "isAmp": false,
+                "iosScheme": "medium",
+                "isSwBoot": false,
+                "lightstep": {
+                    "accessToken": "ce5be895bef60919541332990ac9fef2",
+                    "carrier": "{\"ot-tracer-spanid\":\"6b2a3cc32ed391d1\",\"ot-tracer-traceid\":\"6886a75f4cda016a\",\"ot-tracer-sampled\":\"true\"}",
+                    "host": "collector-medium.lightstep.com"
+                },
+                "facebook": {
+                    "key": "542599432471018",
+                    "namespace": "medium-com",
+                    "scope": {
+                        "default": ["public_profile", "email", "user_friends"],
+                        "connect": ["public_profile", "email", "user_friends"],
+                        "login": ["public_profile", "email", "user_friends"],
+                        "share": ["public_profile", "email", "user_friends", "publish_actions"]
+                    }
+                },
+                "mailingListArchiveUploadSizeMb": 2,
+                "availableMembershipPlans": ["60e220181034"],
+                "editorsPicksTopicId": "3985d2a191c5",
+                "popularOnMediumTopicId": "9d34e48ecf94",
+                "memberContentTopicId": "13d7efd82fb2",
+                "audioContentTopicId": "3792abbd134",
+                "brandedSequenceId": "7d337ddf1941",
+                "isDoNotAuth": false,
+                "goldfinchUrl": "https://goldfinch.medium.com",
+                "buggle": {
+                    "url": "https://buggle.medium.com",
+                    "videoUrl": "https://cdn-videos-1.medium.com",
+                    "audioUrl": "https://cdn-audio-1.medium.com",
+                    "accessToken": "pJN6XGc43dDJLHJQ2ixamOFHUnAgKvhp"
+                }
+            }
+            // ]]>
+    </script>
+    <script charset="UTF-8" src="https://cdn-static-1.medium.com/_/fp/gen-js/main-base.bundle.Bw0Xy6qpotBbCnO7OynPhg.js" async></script>
+    <script>
+        // <![CDATA[
+        window["obvInit"]({
+                "value": {
+                    "id": "1778ae175514",
+                    "versionId": "a8b41ef0884e",
+                    "creatorId": "2315a6d084c2",
+                    "creator": {
+                        "userId": "2315a6d084c2",
+                        "name": "paadams",
+                        "username": "paadams",
+                        "createdAt": 1471379822799,
+                        "lastPostCreatedAt": 1500082836604,
+                        "imageId": "1*23f4oCb2Fl1hpqjG7bsDWg.jpeg",
+                        "backgroundImageId": "",
+                        "bio": "",
+                        "twitterScreenName": "",
+                        "socialStats": {
+                            "userId": "2315a6d084c2",
+                            "usersFollowedCount": 1,
+                            "usersFollowedByCount": 38,
+                            "type": "SocialStats"
+                        },
+                        "social": {
+                            "userId": "lo_b180a0c1c995",
+                            "targetUserId": "2315a6d084c2",
+                            "type": "Social"
+                        },
+                        "facebookAccountId": "",
+                        "allowNotes": 1,
+                        "type": "User"
+                    },
+                    "homeCollectionId": "",
+                    "title": "Build a Simple Todo App with Vue.js and Vuex 2.0",
+                    "detectedLanguage": "en",
+                    "latestVersion": "a8b41ef0884e",
+                    "latestPublishedVersion": "a8b41ef0884e",
+                    "hasUnpublishedEdits": false,
+                    "latestRev": 1584,
+                    "createdAt": 1471483799863,
+                    "updatedAt": 1500946039849,
+                    "acceptedAt": 0,
+                    "firstPublishedAt": 1471483857684,
+                    "latestPublishedAt": 1473869225324,
+                    "vote": false,
+                    "experimentalCss": "",
+                    "displayAuthor": "",
+                    "content": {
+                        "subtitle": "An introduction to building apps with Vue.js and Vuex 2.0",
+                        "bodyModel": {
+                            "paragraphs": [{
+                                "name": "f8c2",
+                                "type": 3,
+                                "text": "Build a Simple Todo App with Vue.js and Vuex 2.0",
+                                "markups": []
+                            }, {
+                                "name": "8d95",
+                                "type": 1,
+                                "text": "An introduction to building apps with Vue.js and Vuex 2.0",
+                                "markups": []
+                            }, {
+                                "name": "126c",
+                                "type": 1,
+                                "text": "This tutorial will cover some of the basics of building an app using the latest versions of Vue.js and Vuex.",
+                                "markups": []
+                            }, {
+                                "name": "5c48",
+                                "type": 6,
+                                "text": "Vue.js (pronounced /vjuː/, like view) is a library for building interactive web interfaces. The goal of Vue.js is to provide the benefits of reactive data binding and composable view components with an API that is as simple as possible.",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 32,
+                                    "end": 36
+                                }, {
+                                    "type": 1,
+                                    "start": 141,
+                                    "end": 162
+                                }, {
+                                    "type": 1,
+                                    "start": 167,
+                                    "end": 193
+                                }]
+                            }, {
+                                "name": "8311",
+                                "type": 1,
+                                "text": "Vue 2.0 is in the RC phase of its development at the time of this writing. A number of excellent features have been added to Vue in v2.0, including, but not limited to, the virtual-DOM.",
+                                "markups": []
+                            }, {
+                                "name": "7c13",
+                                "type": 1,
+                                "text": "Vuex also underwent a recent update and is now in RC phase. We will discuss how one should create one’s Vuex store based on the latest version of Vuex by building a simple todo app that will allow users to add, edit, complete, and remove tasks.",
+                                "markups": []
+                            }, {
+                                "name": "fea8",
+                                "type": 6,
+                                "text": "Vuex is an application architecture for centralized state management in Vue.js applications. It is inspired by Flux and Redux, but with simplified concepts and an implementation that is designed specifically to take advantage of Vue.js’ reactivity system.",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 111,
+                                    "end": 115,
+                                    "href": "https://facebook.github.io/flux/",
+                                    "title": "",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }, {
+                                    "type": 3,
+                                    "start": 120,
+                                    "end": 125,
+                                    "href": "https://github.com/rackt/redux",
+                                    "title": "",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }, {
+                                "name": "d6ab",
+                                "type": 1,
+                                "text": "Getting Started",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 15
+                                }]
+                            }, {
+                                "name": "a8bc",
+                                "type": 1,
+                                "text": "Vue has streamlined the process of getting started with vue-cli. Many in the Vue community have also contributed by creating similar projects that make getting started a breeze. In this tutorial we are going to use a more minimal setup called webpack-simple-2.0. The setup process is straightforward, but since this setup does not ship with Vuex, we will have to import it into our project by:",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 56,
+                                    "end": 63,
+                                    "href": "https://github.com/vuejs/vue-cli",
+                                    "title": "",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }, {
+                                    "type": 3,
+                                    "start": 243,
+                                    "end": 261,
+                                    "href": "https://github.com/vuejs-templates/webpack-simple-2.0",
+                                    "title": "",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }, {
+                                "name": "e523",
+                                "type": 8,
+                                "text": "npm install vuex@next",
+                                "markups": []
+                            }, {
+                                "name": "5f49",
+                                "type": 1,
+                                "text": "This will install the latest version of Vuex.",
+                                "markups": []
+                            }, {
+                                "name": "9b8b",
+                                "type": 1,
+                                "text": "Inside of our project, we already have a component and Vue instance. Let’s remove the contents inside:",
+                                "markups": []
+                            }, {
+                                "name": "ff1b",
+                                "type": 8,
+                                "text": "\x3cdiv id=”app”\x3e",
+                                "markups": []
+                            }, {
+                                "name": "8b92",
+                                "type": 8,
+                                "text": "\x3c/div\x3e",
+                                "markups": []
+                            }, {
+                                "name": "6aec",
+                                "type": 1,
+                                "text": "As well as the contents in the export expression. App.vue should now look like this:",
+                                "markups": []
+                            }, {
+                                "name": "e177",
+                                "type": 8,
+                                "text": "\x3ctemplate\x3e\n \x3cdiv id=”app”\x3e\n \x3c/div\x3e\n\x3c/template\x3e",
+                                "markups": []
+                            }, {
+                                "name": "1562",
+                                "type": 8,
+                                "text": "\x3cscript\x3e\nexport default {",
+                                "markups": []
+                            }, {
+                                "name": "97f4",
+                                "type": 8,
+                                "text": "} \n\x3c/script\x3e",
+                                "markups": []
+                            }, {
+                                "name": "1b05",
+                                "type": 8,
+                                "text": "\x3cstyle\x3e\nbody {\n font-family: Helvetica, sans-serif;\n}\n\x3c/style\x3e",
+                                "markups": []
+                            }, {
+                                "name": "1de0",
+                                "type": 1,
+                                "text": "Vuex Store",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 10
+                                }]
+                            }, {
+                                "name": "66f3",
+                                "type": 1,
+                                "text": "Let’s begin by creating our Vuex store. Create a folder inside the src directory called store. Inside store we will add a file named store.js which will contain our entire store.",
+                                "markups": []
+                            }, {
+                                "name": "fede",
+                                "type": 6,
+                                "text": "At the center of every Vuex application is the store. A “store” is basically a container that holds your application state. There are two things that makes a Vuex store different from a plain global object:",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 47,
+                                    "end": 52
+                                }, {
+                                    "type": 1,
+                                    "start": 117,
+                                    "end": 122
+                                }]
+                            }, {
+                                "name": "97d3",
+                                "type": 6,
+                                "text": "Vuex stores are reactive. When Vue components retrieve state from it, they will reactively and efficiently update if the store’s state changes.",
+                                "markups": []
+                            }, {
+                                "name": "de29",
+                                "type": 6,
+                                "text": "2. You cannot directly mutate the store’s state. The only way to change a store’s state is by explicitly dispatching mutations. This makes every state change easily track-able, and enables tooling that helps us better understand our applications.",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 117,
+                                    "end": 126
+                                }]
+                            }, {
+                                "name": "0cf4",
+                                "type": 1,
+                                "text": "In earlier version of Vuex, a separate file inside one’s store directory would be created for actions. One of the newest features of Vuex is the ability to define actions and getters in one’s store; in doing so, making one’s modules more portable and composable. Here is the basic structure of our store:",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 212,
+                                    "end": 261,
+                                    "href": "https://github.com/vuejs/vuex/issues/236",
+                                    "title": "",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }, {
+                                "name": "2eec",
+                                "type": 8,
+                                "text": "import Vue from ‘vue’\nimport Vuex from ‘vuex’",
+                                "markups": []
+                            }, {
+                                "name": "6bd4",
+                                "type": 8,
+                                "text": "Vue.use(Vuex)",
+                                "markups": []
+                            }, {
+                                "name": "3348",
+                                "type": 8,
+                                "text": "export default new Vuex.Store({\n state: {\n \n },\n mutations: {",
+                                "markups": []
+                            }, {
+                                "name": "2315",
+                                "type": 8,
+                                "text": " },\n actions: {",
+                                "markups": []
+                            }, {
+                                "name": "30a7",
+                                "type": 8,
+                                "text": " }\n})",
+                                "markups": []
+                            }, {
+                                "name": "1ede",
+                                "type": 1,
+                                "text": "If you are new to Vuex, the terms state, mutations, and actions might be confusing. However, the concept behind each is quite simple. We create a state object that holds the initial state when our the app starts up. Next we create an object for storing our mutations. In Vuex, mutations are basically events. Finally, we create an object to store our actions. Actions are functions that dispatch mutations. This is what our finished store will look like:",
+                                "markups": []
+                            }, {
+                                "name": "0c2c",
+                                "type": 8,
+                                "text": "import Vue from ‘vue’\nimport Vuex from ‘vuex’",
+                                "markups": []
+                            }, {
+                                "name": "2ca3",
+                                "type": 8,
+                                "text": "Vue.use(Vuex)",
+                                "markups": []
+                            }, {
+                                "name": "5113",
+                                "type": 8,
+                                "text": "export default new Vuex.Store({\n state: {\n   todos: [],\n   newTodo: ‘’\n },\n mutations: {\n   GET_TODO(state, todo){\n     state.newTodo = todo\n   },\n   ADD_TODO(state){\n     state.todos.push({\n       body: state.newTodo,\n       completed: false\n     })\n   },\n   EDIT_TODO(state, todo){\n      var todos = state.todos\n      todos.splice(todos.indexOf(todo), 1)\n      state.todos = todos\n      state.newTodo = todo.body\n   },\n   REMOVE_TODO(state, todo){\n      var todos = state.todos\n      todos.splice(todos.indexOf(todo), 1)\n   },\n   COMPLETE_TODO(state, todo){\n     todo.completed = !todo.completed\n   },\n   CLEAR_TODO(state){\n     state.newTodo = ''\n   }",
+                                "markups": []
+                            }, {
+                                "name": "64f3",
+                                "type": 8,
+                                "text": "  },\n actions: {\n   getTodo({commit}, todo){\n     commit(‘GET_TODO’, todo)\n   },\n   addTodo({commit}){\n     commit(‘ADD_TODO’)\n   },\n   editTodo({commit}, todo){\n     commit(‘EDIT_TODO’, todo)\n   },\n   removeTodo({commit}, todo){\n     commit(‘REMOVE_TODO’, todo)\n   },\n   completeTodo({commit}, todo){\n    commit(‘COMPLETE_TODO’, todo)\n   },\n   clearTodo({commit}){\n     commit('CLEAR_TODO')\n   }\n})",
+                                "markups": []
+                            }, {
+                                "name": "f8c9",
+                                "type": 1,
+                                "text": "State",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 5
+                                }]
+                            }, {
+                                "name": "af2b",
+                                "type": 1,
+                                "text": "The initial state, when our app starts up, is an empty list of todos, which will store our newly added todos, and an empty string, which will hold onto the task to be added to todos.",
+                                "markups": []
+                            }, {
+                                "name": "b980",
+                                "type": 1,
+                                "text": "Mutations",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 9
+                                }]
+                            }, {
+                                "name": "c95e",
+                                "type": 1,
+                                "text": "Each mutation has a name and a handler: the handler takes as its first argument the state. It is a convention to name mutations in all caps in order to distinguish them from ordinary functions. GET_STATE takes the value entered in by the user and assigns it to state.newTodo. ADD_TODO, when triggered, adds a new todo to our list of todos — with body being set to the value of state.newTodo and completed being set to false. The mutations are straightforward, so we won’t spend much time explaining each of them in detail.",
+                                "markups": []
+                            }, {
+                                "name": "37fb",
+                                "type": 1,
+                                "text": "Actions",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 7
+                                }]
+                            }, {
+                                "name": "7da4",
+                                "type": 1,
+                                "text": "Vuex actions expect a store as a required argument followed by optional arguments. Using argument destructuring, it is possible to pass additional arguments using the following syntax:",
+                                "markups": []
+                            }, {
+                                "name": "056f",
+                                "type": 8,
+                                "text": "addTodo({commit}){\n     commit(‘ADD_TODO’)\n},",
+                                "markups": []
+                            }, {
+                                "name": "5aac",
+                                "type": 1,
+                                "text": "Without argument destructuring:",
+                                "markups": []
+                            }, {
+                                "name": "06ff",
+                                "type": 8,
+                                "text": "addTodo = function(store){\n  var commit = store.commit\n  commit('ADD_TODO')\n}",
+                                "markups": []
+                            }, {
+                                "name": "e211",
+                                "type": 1,
+                                "text": "What happened to dispatch?",
+                                "markups": [{
+                                    "type": 2,
+                                    "start": 0,
+                                    "end": 26
+                                }]
+                            }, {
+                                "name": "37b9",
+                                "type": 1,
+                                "text": "If you have experience with earlier versions of Vuex you might be thrown off by the new terms. In Vuex 2.0, dispatch is reserved for firing actions and commit is used for triggering mutations. An action is dispatched; a mutation is committed. Because our actions are defined inside of our Vuex store, actions can be dispatched in various modules with a single call:",
+                                "markups": []
+                            }, {
+                                "name": "45ff",
+                                "type": 8,
+                                "text": "\x3cbutton @click=”$store.dispatch(‘addTodo’)”\x3eAdd Todo\x3c/button\x3e",
+                                "markups": []
+                            }, {
+                                "name": "a37d",
+                                "type": 1,
+                                "text": "When addTodo is dispatched, it triggers the ADD_TODO mutation and pushes a new todo to the existing list of todos. The rest of the actions, when fired, behave in a similar manner so there is no need to go over each one.",
+                                "markups": []
+                            }, {
+                                "name": "f60f",
+                                "type": 1,
+                                "text": "That’s it for our store. All that’s left is to import and register it in our Vue instance located in main.js:",
+                                "markups": []
+                            }, {
+                                "name": "a633",
+                                "type": 8,
+                                "text": "import Vue from ‘vue’\nimport App from ‘./App.vue’\nimport store from ‘./store/store’",
+                                "markups": []
+                            }, {
+                                "name": "edd3",
+                                "type": 8,
+                                "text": "new Vue({\n  el: ‘#app’,\n  store,\n  render: h =\x3e h(App)\n})",
+                                "markups": []
+                            }, {
+                                "name": "be6b",
+                                "type": 1,
+                                "text": "Building Components",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 19
+                                }]
+                            }, {
+                                "name": "f05e",
+                                "type": 1,
+                                "text": "Our simple todo app will be built from four different components: App, GetTodo, CurrentTodos, and CompletedTodos.",
+                                "markups": []
+                            }, {
+                                "name": "d418",
+                                "type": 6,
+                                "text": "Components are one of the most powerful features of Vue.js. They help you extend basic HTML elements to encapsulate reusable code. At a high level, Components are custom elements that Vue.js’ compiler would attach specified behavior to.",
+                                "markups": []
+                            }, {
+                                "name": "7edd",
+                                "type": 1,
+                                "text": "For an application as simple as a todo, it would be okay to build the entire app from a single component. However, in this tutorial we want to demonstrate how Vuex is used to communicate between various unrelated components.",
+                                "markups": []
+                            }, {
+                                "name": "43a0",
+                                "type": 1,
+                                "text": "GetTodo",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 7
+                                }]
+                            }, {
+                                "name": "2c7d",
+                                "type": 1,
+                                "text": "Before building our components, let’s first create a components sub-directory inside our src directory to store our app components. App.vue can remain in ‘./src’ directory. It is also a good idea to pull bootstrap in for basic styling inside index.html.",
+                                "markups": []
+                            }, {
+                                "name": "d82e",
+                                "type": 1,
+                                "text": "Our GetTodo component:",
+                                "markups": []
+                            }, {
+                                "name": "0ede",
+                                "type": 8,
+                                "text": "\x3ctemplate\x3e\n    \x3cdiv id=\"get-todo\" class=\"container\"\x3e\n        \x3cinput class=\"form-control\"\n               :value=\"newTodo\"\n               @change=\"getTodo\"\n               placeholder=\"I need to...\"\x3e\n        \x3cbutton class=\"btn btn-primary\" @click=\"addTodo\"\x3eAdd Todo\x3c/button\x3e\n    \x3c/div\x3e\n\x3c/template\x3e\n\x3cscript\x3e\n    export default{\n        methods: {\n            getTodo(e){\n                this.$store.dispatch('getTodo', e.target.value)\n            },\n            addTodo(){\n                this.$store.dispatch('addTodo')\n                this.$store.dispatch('clearTodo')\n            }\n        },\n        computed: {\n            newTodo(){\n                return this.$store.getters.newTodo\n            }\n        }",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 136,
+                                    "end": 143,
+                                    "href": "http://twitter.com/change",
+                                    "title": "Twitter profile for @change",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }, {
+                                    "type": 3,
+                                    "start": 237,
+                                    "end": 243,
+                                    "href": "http://twitter.com/click",
+                                    "title": "Twitter profile for @click",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }, {
+                                "name": "a9e6",
+                                "type": 8,
+                                "text": "}\n\x3c/script\x3e",
+                                "markups": []
+                            }, {
+                                "name": "eadf",
+                                "type": 1,
+                                "text": "If you are familiar with Vuex, you may be wondering about the absence of vuex option. As of v2.0, the vuex option has been deprecated in favor of computed properties and methods. The author contends that using computed properties and methods alleviates the need to import the store everywhere it will be needed. Another change you’ll likely notice is the absence of getters. In v2.0, getters are defined in the store and accessed by:",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 123,
+                                    "end": 134,
+                                    "href": "https://github.com/vuejs/vuex/releases",
+                                    "title": "",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }, {
+                                "name": "ac10",
+                                "type": 8,
+                                "text": "store.getters",
+                                "markups": []
+                            }, {
+                                "name": "c2bd",
+                                "type": 1,
+                                "text": "Inside of our store, add a getters object below the existing actions object. Add the following:",
+                                "markups": []
+                            }, {
+                                "name": "d4bc",
+                                "type": 8,
+                                "text": "getters: {\n    newTodo: state =\x3e state.newTodo,\n    todos: state =\x3e state.todos.filter((todo) =\x3e {return   !todo.completed}),",
+                                "markups": []
+                            }, {
+                                "name": "4165",
+                                "type": 8,
+                                "text": "}",
+                                "markups": []
+                            }, {
+                                "name": "14ed",
+                                "type": 1,
+                                "text": "newTodo returns the value of the new todo entered by the user. This value is bound to the input. Todos returns an array containing all of the todos whose completed value is false. Since we also want to display all the completed todos inside the CompletedTodos component, we might as well add that now:",
+                                "markups": []
+                            }, {
+                                "name": "b8b5",
+                                "type": 8,
+                                "text": "completedTodos: state =\x3e state.todos.filter((todo) =\x3e {return todo.completed})",
+                                "markups": []
+                            }, {
+                                "name": "9609",
+                                "type": 1,
+                                "text": "Next, we should register our components inside of our App component. We register and use components as custom elements like so:",
+                                "markups": []
+                            }, {
+                                "name": "c3db",
+                                "type": 8,
+                                "text": "\x3ctemplate\x3e\n  \x3cdiv id=\"app\" class=\"container\"\x3e\n    \x3cCompletedTodos\x3e\x3c/CompletedTodos\x3e\n    \x3cGetTodo\x3e\x3c/GetTodo\x3e\n    \x3cCurrentTodos\x3e\x3c/CurrentTodos\x3e\n  \x3c/div\x3e\n\x3c/template\x3e",
+                                "markups": []
+                            }, {
+                                "name": "7fba",
+                                "type": 8,
+                                "text": "\x3cscript\x3e\nimport GetTodo from './components/GetTodo.vue'\nimport CurrentTodos from './components/CurrentTodos.vue'\nimport CompletedTodos from './components/CompletedTodos.vue'\nexport default {\n  components: {\n    GetTodo,\n    CurrentTodos,\n    CompletedTodos\n  }\n \n}\n\x3c/script\x3e",
+                                "markups": []
+                            }, {
+                                "name": "16f9",
+                                "type": 8,
+                                "text": "\x3cstyle\x3e\nbody {\n  font-family: Helvetica, sans-serif;\n}\n\x3c/style\x3e",
+                                "markups": []
+                            }, {
+                                "name": "beb6",
+                                "type": 1,
+                                "text": "CurrentTodos",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 12
+                                }]
+                            }, {
+                                "name": "cb72",
+                                "type": 1,
+                                "text": "CurrentTodos component is responsible for displaying all todos whose completed value is false. Along with displaying the body of each todo, the component also provides buttons for editing, completing, and removing a todo from the todo list. The component also shows the number of todos that are in progress. This is what CurrentTodos looks like:",
+                                "markups": []
+                            }, {
+                                "name": "a866",
+                                "type": 8,
+                                "text": "\x3ctemplate\x3e\n    \x3cdiv id=\"current-todos\" class=\"container\"\x3e\n        \x3ch3 v-if=\"todos.length \x3e 0\"\x3eCurrent({{todos.length}})\x3c/h3\x3e\n        \x3cul class=\"list-group\"\x3e\n            \x3cli class=\"list-group-item\" v-for=\"todo in todos\"\x3e\n                {{todo.body}}\n            \x3cdiv class=\"btn-group\"\x3e\n                \x3cbutton type=\"button\" @click=\"edit(todo)\" class=\"btn btn-default btn-sm\"\x3e\n                \x3cspan class=\"glyphicon glyphicon-edit\"\x3e\x3c/span\x3e Edit\n                \x3c/button\x3e\n                \x3cbutton type=\"button\" @click=\"complete(todo)\" class=\"btn btn-default btn-sm\"\x3e\n                \x3cspan class=\"glyphicon glyphicon-ok-circle\"\x3e\x3c/span\x3e Complete\n                \x3c/button\x3e\n                \x3cbutton type=\"button\" @click=\"remove(todo)\" class=\"btn btn-default btn-sm\"\x3e\n                \x3cspan class=\"glyphicon glyphicon-remove-circle\"\x3e\x3c/span\x3e Remove\n                \x3c/button\x3e\n            \x3c/div\x3e\n            \x3c/li\x3e\n        \x3c/ul\x3e\n    \x3c/div\x3e\n\x3c/template\x3e\n\x3cscript\x3e\nexport default{\n    methods: {\n        edit(todo){\n            this.$store.dispatch('editTodo', todo)\n        },\n        complete(todo){\n            this.$store.dispatch('completeTodo', todo)\n        },\n        remove(todo){\n            this.$store.dispatch('removeTodo', todo)\n        }\n    },\n    computed: {\n        todos(){\n            return this.$store.getters.todos\n        }\n    }\n}\n\x3c/script\x3e\n\x3cstyle\x3e\n    .btn-group{\n        float: right;\n    }\n\x3c/style\x3e",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 324,
+                                    "end": 330,
+                                    "href": "http://twitter.com/click",
+                                    "title": "Twitter profile for @click",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }, {
+                                    "type": 3,
+                                    "start": 508,
+                                    "end": 514,
+                                    "href": "http://twitter.com/click",
+                                    "title": "Twitter profile for @click",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }, {
+                                    "type": 3,
+                                    "start": 705,
+                                    "end": 711,
+                                    "href": "http://twitter.com/click",
+                                    "title": "Twitter profile for @click",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }, {
+                                "name": "204d",
+                                "type": 1,
+                                "text": "When a user clicks on edit, the todo is removed and the value of the todo.body appears in the input. The user can then edit the body of the todo and add the edited text back into the list of current todos. Removing a todo will remove it from the todos list altogether. By completing a todo, the user changes the value of completed from false to true. Because we are only mapping over the todos that have a completed value of false, the todo will no longer be displayed in the current todos. Instead, it will be displayed as a completed todo.",
+                                "markups": []
+                            }, {
+                                "name": "89db",
+                                "type": 1,
+                                "text": "CompletedTodos",
+                                "markups": [{
+                                    "type": 1,
+                                    "start": 0,
+                                    "end": 14
+                                }]
+                            }, {
+                                "name": "1b26",
+                                "type": 1,
+                                "text": "This is our CompletedTodos component:",
+                                "markups": []
+                            }, {
+                                "name": "675d",
+                                "type": 8,
+                                "text": "\x3ctemplate\x3e\n    \x3cdiv id=\"completed-todos\"\x3e\n        \x3ch3 v-if=\"completed.length \x3e 0\"\x3eCompleted({{completed.length}})\x3c/h3\x3e\n        \x3cul class=\"list-group\"\x3e\n            \x3cli class=\"list-group-item\" v-for=\"todo in completed\"\x3e\n                {{todo.body}}\n                \x3cbutton type=\"button\" @click=\"remove(todo)\" class=\"btn btn-default btn-sm\"\x3e\n                \x3cspan class=\"glyphicon glyphicon-remove-circle\"\x3e\x3c/span\x3e Remove\n                \x3c/button\x3e\n            \x3c/li\x3e\n        \x3c/ul\x3e",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 286,
+                                    "end": 292,
+                                    "href": "http://twitter.com/click",
+                                    "title": "Twitter profile for @click",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }, {
+                                "name": "d8b6",
+                                "type": 8,
+                                "text": "\x3c/div\x3e\n\x3c/template\x3e",
+                                "markups": []
+                            }, {
+                                "name": "6e7a",
+                                "type": 8,
+                                "text": "\x3cscript\x3e\n    export default{\n        methods: {\n            remove(todo){\n                this.$store.dispatch('removeTodo', todo)\n            }\n        },\n        computed: {\n            completed(){\n                return this.$store.getters.completedTodos\n            }\n        }\n    }\n\x3c/script\x3e",
+                                "markups": []
+                            }, {
+                                "name": "2796",
+                                "type": 1,
+                                "text": "Completed todos are displayed as a user completes current todos. For this tutorial, we only display the number of completed todos, the body of the todo, and an option to remove the completed todos from the list.",
+                                "markups": []
+                            }, {
+                                "name": "0b7f",
+                                "type": 1,
+                                "text": "There are plenty of other features we could add to our app to enhance it’s functionality, but I hope this brief introduction helped you better understand how to get started writing applications in Vue and Vuex 2.0.",
+                                "markups": []
+                            }, {
+                                "name": "5af5",
+                                "type": 1,
+                                "text": "Source code for our simple todo app can be found here.",
+                                "markups": [{
+                                    "type": 3,
+                                    "start": 49,
+                                    "end": 53,
+                                    "href": "https://github.com/p-adams/simple-todo-tutorial/tree/master/simple-todo",
+                                    "title": "",
+                                    "rel": "",
+                                    "anchorType": 0
+                                }]
+                            }],
+                            "sections": [{
+                                "name": "030a",
+                                "startIndex": 0
+                            }, {
+                                "name": "1795",
+                                "startIndex": 7
+                            }, {
+                                "name": "0295",
+                                "startIndex": 19
+                            }, {
+                                "name": "c16e",
+                                "startIndex": 81
+                            }]
+                        },
+                        "postDisplay": {
+                            "coverless": true
+                        }
+                    },
+                    "virtuals": {
+                        "allowNotes": true,
+                        "previewImage": {
+                            "imageId": "",
+                            "filter": "",
+                            "backgroundSize": "",
+                            "originalWidth": 0,
+                            "originalHeight": 0,
+                            "strategy": "resample",
+                            "height": 0,
+                            "width": 0
+                        },
+                        "wordCount": 1880,
+                        "imageCount": 0,
+                        "readingTime": 7.09433962264151,
+                        "subtitle": "An introduction to building apps with Vue.js and Vuex 2.0",
+                        "usersBySocialRecommends": [],
+                        "recommends": 84,
+                        "socialRecommends": [],
+                        "isBookmarked": false,
+                        "tags": [{
+                            "slug": "javascript",
+                            "name": "JavaScript",
+                            "postCount": 36758,
+                            "virtuals": {
+                                "isFollowing": false
+                            },
+                            "metadata": {
+                                "followerCount": 37430,
+                                "postCount": 36758,
+                                "coverImage": {
+                                    "id": "1*2mTYU2RCJHagQrqQokYpww.png",
+                                    "originalWidth": 2560,
+                                    "originalHeight": 1440,
+                                    "isFeatured": true
+                                }
+                            },
+                            "type": "Tag"
+                        }, {
+                            "slug": "vuejs",
+                            "name": "Vuejs",
+                            "postCount": 882,
+                            "virtuals": {
+                                "isFollowing": false
+                            },
+                            "metadata": {
+                                "followerCount": 2446,
+                                "postCount": 882,
+                                "coverImage": {
+                                    "id": "1*xhQlA3OPf3Qh-mDmSbSu1g.jpeg",
+                                    "originalWidth": 600,
+                                    "originalHeight": 321
+                                }
+                            },
+                            "type": "Tag"
+                        }, {
+                            "slug": "vuex",
+                            "name": "Vuex",
+                            "postCount": 43,
+                            "virtuals": {
+                                "isFollowing": false
+                            },
+                            "metadata": {
+                                "followerCount": 95,
+                                "postCount": 43,
+                                "coverImage": {
+                                    "id": "1*HAT9N72B8DvH5vbKy6SpGQ.jpeg",
+                                    "originalWidth": 750,
+                                    "originalHeight": 422
+                                }
+                            },
+                            "type": "Tag"
+                        }],
+                        "socialRecommendsCount": 0,
+                        "responsesCreatedCount": 5,
+                        "links": {
+                            "entries": [],
+                            "version": "0.3",
+                            "generatedAt": 1473869226239
+                        },
+                        "isLockedPreviewOnly": false,
+                        "takeoverId": "",
+                        "metaDescription": "",
+                        "totalClapCount": 2,
+                        "sectionCount": 4
+                    },
+                    "coverless": true,
+                    "slug": "build-a-simple-todo-app-with-vue-js",
+                    "translationSourcePostId": "",
+                    "translationSourceCreatorId": "",
+                    "isApprovedTranslation": false,
+                    "inResponseToPostId": "",
+                    "inResponseToRemovedAt": 0,
+                    "isTitleSynthesized": true,
+                    "allowResponses": true,
+                    "importedUrl": "",
+                    "importedPublishedAt": 0,
+                    "visibility": 0,
+                    "uniqueSlug": "build-a-simple-todo-app-with-vue-js-1778ae175514",
+                    "previewContent": {
+                        "bodyModel": {
+                            "paragraphs": [{
+                                "name": "f8c2",
+                                "type": 3,
+                                "text": "Build a Simple Todo App with Vue.js and Vuex 2.0",
+                                "markups": [],
+                                "alignment": 1
+                            }, {
+                                "name": "8d95",
+                                "type": 1,
+                                "text": "An introduction to building apps with Vue.js and Vuex 2.0",
+                                "markups": [],
+                                "alignment": 1
+                            }, {
+                                "name": "126c",
+                                "type": 1,
+                                "text": "This tutorial will cover some of the basics of building an app using the latest versions of Vue.js and Vuex.",
+                                "markups": [],
+                                "alignment": 1
+                            }, {
+                                "name": "5c48",
+                                "type": 6,
+                                "text": "Vue.js (pronounced /vjuː/…",
+                                "markups": [],
+                                "alignment": 1
+                            }],
+                            "sections": [{
+                                "startIndex": 0
+                            }]
+                        },
+                        "isFullContent": false
+                    },
+                    "license": 0,
+                    "inResponseToMediaResourceId": "",
+                    "canonicalUrl": "https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514",
+                    "approvedHomeCollectionId": "",
+                    "newsletterId": "",
+                    "webCanonicalUrl": "https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514",
+                    "mediumUrl": "https://medium.com/@paadams/build-a-simple-todo-app-with-vue-js-1778ae175514",
+                    "migrationId": "",
+                    "notifyFollowers": true,
+                    "notifyTwitter": false,
+                    "isSponsored": false,
+                    "isRequestToPubDisabled": false,
+                    "notifyFacebook": false,
+                    "responseHiddenOnParentPostAt": 0,
+                    "isSeries": false,
+                    "isSubscriptionLocked": false,
+                    "seriesLastAppendedAt": 0,
+                    "audioVersionDurationSec": 0,
+                    "sequenceId": "",
+                    "isNsfw": false,
+                    "premiumTier": 1,
+                    "type": "Post"
+                },
+                "mentionedUsers": [],
+                "collaborators": [],
+                "membershipPlans": [],
+                "collectionUserRelations": [],
+                "mode": null,
+                "references": {
+                    "User": {
+                        "2315a6d084c2": {
+                            "userId": "2315a6d084c2",
+                            "name": "paadams",
+                            "username": "paadams",
+                            "createdAt": 1471379822799,
+                            "lastPostCreatedAt": 1500082836604,
+                            "imageId": "1*23f4oCb2Fl1hpqjG7bsDWg.jpeg",
+                            "backgroundImageId": "",
+                            "bio": "",
+                            "twitterScreenName": "",
+                            "socialStats": {
+                                "userId": "2315a6d084c2",
+                                "usersFollowedCount": 1,
+                                "usersFollowedByCount": 38,
+                                "type": "SocialStats"
+                            },
+                            "social": {
+                                "userId": "lo_b180a0c1c995",
+                                "targetUserId": "2315a6d084c2",
+                                "type": "Social"
+                            },
+                            "facebookAccountId": "",
+                            "allowNotes": 1,
+                            "type": "User"
+                        }
+                    },
+                    "Social": {
+                        "2315a6d084c2": {
+                            "userId": "lo_b180a0c1c995",
+                            "targetUserId": "2315a6d084c2",
+                            "type": "Social"
+                        }
+                    },
+                    "SocialStats": {
+                        "2315a6d084c2": {
+                            "userId": "2315a6d084c2",
+                            "usersFollowedCount": 1,
+                            "usersFollowedByCount": 38,
+                            "type": "SocialStats"
+                        }
+                    }
+                }
+            })
+            // ]]>
+    </script>
+</body>
+
+</html>
