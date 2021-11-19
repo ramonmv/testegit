@@ -30,7 +30,7 @@
 <span class="content_menu">
   
     <div class="icons">
-	<span>Ramon Maia</span>  
+	<span>Ramon Maia Vieira Jr.</span>
     </div>
 </span>
 
