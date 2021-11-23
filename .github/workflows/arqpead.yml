@@ -7,13 +7,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          after_script: |
-            whoami
       - name: Conexao com SSH Server 
-        run: echo Conexao teste
+        uses: kostya-ten/ssh-server-deploy@v4
+        with:
+          host: ${{ secrets.ssh_host }}
+          port: ${{ secrets.ssh_port }}
+          username: ${{ secrets.ssh_user }}
+          password: ${{ secrets.ssh_pass }}
+          script: |
+            cd /var/www/html
+            ls
 
-        
-             
+
         
         
