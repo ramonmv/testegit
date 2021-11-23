@@ -15,11 +15,11 @@ jobs:
           REMOTE_HOST: "${{ secrets.ssh_host }}"
           REMOTE_USER: "${{ secrets.ssh_user }}"
           REMOTE_PASSWORD: "${{ secrets.ssh_pass }}"
-          REMOTE_PATH: "/var/www"
-          SOURCE: "html/"
+          REMOTE_PATH: "/var/www/html/lixo"
+          SOURCE: ""
      
       - name: Listar pasta
-        run: cd /var/www/html && ls
+        run: cd /var/www/html/lixo && ls
           
 
 
