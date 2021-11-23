@@ -1,0 +1,11 @@
+name: Conexao_ArqPEAD
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Conexao com SSH Server 
+        run: echo Conexao teste
+        
+        
