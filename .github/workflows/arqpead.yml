@@ -7,16 +7,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Conexao com SSH Server 
+      - name: Conexao com SSH_Server 
         uses: kostya-ten/ssh-server-deploy@v4
         with:
           host: ${{ secrets.ssh_host }}
           port: ${{ secrets.ssh_port }}
           username: ${{ secrets.ssh_user }}
           password: ${{ secrets.ssh_pass }}
-          script: |
-            cd /var/www/html
-            ls
+      - name: Listar pasta
+        run: cd /var/www/html && ls
+          
 
 
         
