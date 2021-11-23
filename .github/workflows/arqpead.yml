@@ -19,7 +19,7 @@ jobs:
           SOURCE: "html/"
      
       - name: Listar pasta
-        run: cd /var/www/html && ls -a
+        run: cd /var/www/html && ls
           
 
 
