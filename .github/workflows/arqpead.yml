@@ -17,10 +17,13 @@ jobs:
           REMOTE_PASSWORD: "${{ secrets.ssh_pass }}"
           REMOTE_PATH: "/var/www/html/lixo"
           SOURCE: ""
-     
-      - name: Listar pasta
-        run: cd /var/www/html/lixo && ls
-          
+        with:
+          script: |
+            ls -a
+            cd /var/www/html/lixo
+            ls
+            pwd 
+         
 
 
         
