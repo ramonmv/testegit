@@ -17,13 +17,12 @@ jobs:
           host: ${{ secrets.ssh_host }}
           user: ${{ secrets.ssh_user }}
           pass: ${{ secrets.ssh_pass }}
-          connect_timeout: 10s
+          connect_timeout: 25s
           script: |
             ls -la
-            echo rAMONmAIA
             pwd
-            cd /var/www/html/lixo
-            mkdir desenvolvimento
-            ls
+            cd /var/www/html/lixo/desenvolvimento
+            git pull https://github.com/ramonmv/testegit.git main
+            ls -la
 
         
