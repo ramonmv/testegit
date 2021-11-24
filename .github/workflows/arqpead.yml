@@ -5,21 +5,21 @@ jobs:
     name: Build
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout2
-        uses: actions/checkout@v2
-    
-      - name: CONEXAO SSH
-        id: funny-deploy
-        uses: BoatNg/funny-deploy@master
+      - name: checkout
+        uses: actions/checkout@v1
+
+      - name: SSH CONEXAO PIPELINE
+        uses: cross-the-world/ssh-pipeline@master
         env:
-          REMOTE_HOST: "${{ secrets.ssh_host }}"
-          REMOTE_USER: "${{ secrets.ssh_user }}"
-          REMOTE_PASSWORD: "${{ secrets.ssh_pass }}"
-          REMOTE_PATH: "/var/www/html/lixo"
+          WELCOME: "ssh pipeline"
+          DIR2: "/home/github/test/test2"
         with:
-          script: ls
-         
+          host: ${{ secrets.ssh_host }}
+          user: ${{ secrets.ssh_user }}
+          pass: ${{ secrets.ssh_pass }}
+          connect_timeout: 10s
+          script: |
+            ls -la
+            echo rAMONmAIA
 
-
-        
         
