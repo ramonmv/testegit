@@ -1,16 +1,13 @@
-name: Conexao_ArqPEAD
+name: Conexao_ArqPEAD_v2
 on: [push]
 jobs:
   build:
     name: Build
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout
+      - name: Checkout2
         uses: actions/checkout@v2
-        with:
-          script: |
-            ls -a
-     
+    
       - name: CONEXAO SSH
         id: funny-deploy
         uses: BoatNg/funny-deploy@master
@@ -21,6 +18,7 @@ jobs:
           REMOTE_PATH: "/var/www/html/lixo"
         with:
           script: |
+            echo RamonMaia 
             ls -a
             cd /var/www/html/lixo
             mkdir desenvolvimento
