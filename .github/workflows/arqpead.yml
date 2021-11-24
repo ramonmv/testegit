@@ -17,13 +17,7 @@ jobs:
           REMOTE_PASSWORD: "${{ secrets.ssh_pass }}"
           REMOTE_PATH: "/var/www/html/lixo"
         with:
-          script: |
-            echo RamonMaia 
-            ls -a
-            cd /var/www/html/lixo
-            mkdir desenvolvimento
-            ls
-            pwd 
+          script: ls
          
 
 
