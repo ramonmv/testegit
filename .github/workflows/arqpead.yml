@@ -19,7 +19,6 @@ jobs:
           REMOTE_USER: "${{ secrets.ssh_user }}"
           REMOTE_PASSWORD: "${{ secrets.ssh_pass }}"
           REMOTE_PATH: "/var/www/html/lixo"
-          SOURCE: ""
         with:
           script: |
             ls -a
